@@ -1,7 +1,7 @@
 Package: actxps
 Title: Create Actuarial Experience Studies: Prepare Data, Summarize
         Results, and Create Reports
-Version: 0.2.0
+Version: 0.2.1
 Authors@R: 
     person("Matt", "Heaphy", email = "mattrmattrs@gmail.com", role = c("aut", "cre"))
 Maintainer: Matt Heaphy <mattrmattrs@gmail.com>
@@ -16,19 +16,21 @@ Description: Experience studies are used by actuaries to explore historical
     function is described in: Herzog (1999, ISBN:1-56698-374-6) 
     "Introduction to Credibility Theory".
 License: MIT + file LICENSE
-URL: https://github.com/mattheaphy/actxps/
+URL: https://github.com/mattheaphy/actxps/,
+        https://mattheaphy.github.io/actxps/
 BugReports: https://github.com/mattheaphy/actxps/issues
 Encoding: UTF-8
-RoxygenNote: 7.2.0
-Suggests: testthat (>= 3.0.0)
+RoxygenNote: 7.2.3
+Suggests: knitr, RColorBrewer, rmarkdown, testthat (>= 3.0.0)
 Config/testthat/edition: 3
 Depends: R (>= 4.1)
 Imports: lubridate, dplyr, ggplot2, tibble, rlang, glue, purrr, scales,
-        gt, paletteer, RColorBrewer, recipes, generics, shiny (>= 1.6),
-        bslib, thematic, readr
+        gt, paletteer, recipes, generics, shiny (>= 1.6), bslib,
+        thematic, readr
 LazyData: true
+VignetteBuilder: knitr
 NeedsCompilation: no
-Packaged: 2022-08-30 12:57:37 UTC; Matt
+Packaged: 2023-02-11 12:56:37 UTC; Matt
 Author: Matt Heaphy [aut, cre]
 Repository: CRAN
-Date/Publication: 2022-08-31 07:40:02 UTC
+Date/Publication: 2023-02-11 13:10:02 UTC
