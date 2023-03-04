@@ -50,7 +50,7 @@ exposed_data |>
 
 exposed_data |> 
   group_by(pol_yr) |> 
-  exp_stats(wt = 'pol_val')
+  exp_stats(wt = 'premium')
 
 
 ## ----act-exp------------------------------------------------------------------
@@ -77,7 +77,7 @@ exp_res |>
 exposed_data2 |>
   group_by(pol_yr, inc_guar) |>
   exp_stats(expected = c("expected_1", "expected_2"), 
-            wt = "pol_val") |> 
+            wt = "premium") |> 
   select(pol_yr, inc_guar, q_obs, expected_1, expected_2, 
          ae_expected_1, ae_expected_2)
 

@@ -89,3 +89,15 @@ expose(toy_census2, end_date = "2022-12-31",
 #    left_join(values, by = c("pol_num", "pol_yr"))
 #  
 
+## ----combine-1----------------------------------------------------------------
+
+exposed_data2 <- expose(toy_census, 
+                        end_date = "2023-12-31", 
+                        start_date = "1890-01-01",
+                        target_status = "Surrender")
+
+vctrs::vec_rbind(exposed_data, exposed_data2)
+
+## ----combine-2----------------------------------------------------------------
+dplyr::bind_rows(exposed_data, exposed_data2)
+
