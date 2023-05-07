@@ -1,7 +1,7 @@
 Package: actxps
 Title: Create Actuarial Experience Studies: Prepare Data, Summarize
         Results, and Create Reports
-Version: 1.0.1
+Version: 1.1.0
 Authors@R: 
     person("Matt", "Heaphy", email = "mattrmattrs@gmail.com", role = c("aut", "cre"))
 Maintainer: Matt Heaphy <mattrmattrs@gmail.com>
@@ -25,13 +25,13 @@ Suggests: knitr, RColorBrewer, rmarkdown, testthat (>= 3.0.0), shiny
         (>= 1.6), bslib, thematic
 Config/testthat/edition: 3
 Depends: R (>= 4.1)
-Imports: lubridate, dplyr (>= 1.1.0), ggplot2, tibble, rlang, glue,
-        purrr, scales, gt, paletteer, recipes, generics, readr, tidyr,
-        vctrs
+Imports: lubridate, dplyr (>= 1.1.1), ggplot2, tibble, rlang, glue,
+        purrr, scales, gt (>= 0.9.0), paletteer, recipes, generics,
+        readr, tidyr, vctrs
 LazyData: true
 VignetteBuilder: knitr
 NeedsCompilation: no
-Packaged: 2023-04-11 02:40:12 UTC; Matt
+Packaged: 2023-05-07 12:47:46 UTC; Matt
 Author: Matt Heaphy [aut, cre]
 Repository: CRAN
-Date/Publication: 2023-04-11 11:30:02 UTC
+Date/Publication: 2023-05-07 13:10:02 UTC

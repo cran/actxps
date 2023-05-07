@@ -16,7 +16,8 @@
 #' @param fontsize Font size percentage multiplier.
 #' @param decimals Number of decimals to display for percentages
 #' @param colorful If `TRUE`, color will be added to the the observed
-#' decrement rate and actual-to-expected columns.
+#' decrement rate and actual-to-expected columns for termination studies, and
+#' the utilization rate and "percentage of" columns for transaction studies.
 #' @param color_q_obs Color palette used for the observed decrement rate.
 #' @param color_ae_ Color palette used for actual-to-expected rates.
 #' @param color_util Color palette used for utilization rates.
@@ -114,7 +115,7 @@ autotable.exp_df <- function(object, fontsize = 100, decimals = 1,
     tab <- tab |>
       gt::data_color(
         columns = q_obs,
-        colors = scales::col_numeric(
+        fn = scales::col_numeric(
           palette = paletteer::paletteer_d(palette = color_q_obs) |>
             as.character(),
           domain = NULL
@@ -122,7 +123,7 @@ autotable.exp_df <- function(object, fontsize = 100, decimals = 1,
       ) |>
       gt::data_color(
         columns = dplyr::starts_with("ae_"),
-        colors = scales::col_numeric(
+        fn = scales::col_numeric(
           palette = paletteer::paletteer_d(palette = color_ae_) |>
             as.character(),
           domain = domain_ae,
@@ -153,13 +154,12 @@ autotable.trx_df <- function(object, fontsize = 100, decimals = 1,
   if (!is.null(percent_of)) {
     object <- object |>
       select(-dplyr::all_of(percent_of),
-                    -dplyr::all_of(paste0(percent_of, "_w_trx")))
+             -dplyr::all_of(paste0(percent_of, "_w_trx")))
   }
 
   tab <- object |>
     select(-exposure) |>
     arrange(trx_type) |>
-    # gt::gt(..., groupname_col = "trx_type") |>
     gt::gt(groupname_col = "trx_type") |>
     gt::fmt_number(c(trx_n, trx_amt, trx_flag, avg_trx, avg_all),
                    decimals = 0) |>
@@ -200,7 +200,7 @@ autotable.trx_df <- function(object, fontsize = 100, decimals = 1,
     tab <- tab |>
       gt::data_color(
         columns = trx_util,
-        colors = scales::col_numeric(
+        fn = scales::col_numeric(
           palette = paletteer::paletteer_d(palette = color_util) |>
             as.character(),
           domain = NULL
@@ -208,7 +208,7 @@ autotable.trx_df <- function(object, fontsize = 100, decimals = 1,
       ) |>
       gt::data_color(
         columns = dplyr::starts_with("pct_of"),
-        colors = scales::col_numeric(
+        fn = scales::col_numeric(
           palette = paletteer::paletteer_d(palette = color_pct_of) |>
             as.character(),
           domain = domain_pct,
