@@ -4,6 +4,9 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 
+actxps:::set_actxps_plot_theme()
+
+
 ## ----packages, message=FALSE--------------------------------------------------
 library(actxps)
 library(dplyr)
@@ -54,21 +57,12 @@ exp_res <- exposed_data |>
 exp_res
 
 
-## ----plot, warning=FALSE, message=FALSE, dpi = 400----------------------------
-
-library(ggplot2)
-
-.colors <- c("#eb15e4", "#7515eb")
-theme_set(theme_light())
-
-exp_res |>
-  autoplot() +
-  scale_color_manual(values = .colors) +
-  labs(title = "Observed Surrender Rates by Policy Year and Income Guarantee Presence")
-
+## ----plot, warning=FALSE, message=FALSE, dpi = 300----------------------------
+autoplot(exp_res)
 
 ## ----table, eval = FALSE------------------------------------------------------
-#  autotable(exp_res)
+#  # first 10 rows showed for brevity
+#  exp_res |> head(10) |> autotable()
 
 ## ----summary-1----------------------------------------------------------------
 summary(exp_res)

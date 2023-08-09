@@ -4,6 +4,8 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 
+actxps:::set_actxps_plot_theme()
+
 ## ----packages-----------------------------------------------------------------
 
 library(actxps)
@@ -52,25 +54,21 @@ trx_res <- exposed_trx_w_av |>
 glimpse(trx_res)
 
 
-## ----trx-plot, warning=FALSE, message=FALSE, dpi = 400------------------------
+## ----trx-plot, warning=FALSE, message=FALSE, fig.height=5.5, fig.width=7------
 
 library(ggplot2)
-
-.colors <- c("#eb15e4", "#7515eb")
-theme_set(theme_light())
 
 trx_res |>
   # remove periods with zero transactions
   filter(trx_n > 0) |> 
-  autoplot(y = pct_of_av_anniv_w_trx) +
-  scale_color_manual(values = .colors) +
-  labs(title = "Observed Withdrawal Rates by Policy Year and Income Guarantee Presence")
-
+  autoplot(y = pct_of_av_anniv_w_trx)
 
 ## ----trx-table, eval = FALSE--------------------------------------------------
 #  trx_res |>
 #    # remove periods with zero transactions
 #    filter(trx_n > 0) |>
+#    # first 10 rows showed for brevity
+#    head(10) |>
 #    autotable()
 
 ## ----select-trx-type----------------------------------------------------------
