@@ -648,9 +648,8 @@ calendar-based exposures.</p>
 <div id="convenience-functions" class="section level3">
 <h3>Convenience functions</h3>
 <p>The following functions are convenience wrappers around
-<code>expose()</code> that can be used to target a specific exposure
-type without specifying <code>cal_expo</code> and
-<code>expo_length</code>.</p>
+<code>expose()</code> that target a specific exposure type without
+specifying <code>cal_expo</code> and <code>expo_length</code>.</p>
 <ul>
 <li><code>expose_py</code> = exposures by policy year</li>
 <li><code>expose_pq</code> = exposures by policy quarter</li>
@@ -667,7 +666,7 @@ type without specifying <code>cal_expo</code> and
 <h2>Tidymodels recipe step</h2>
 <p>For machine learning feature engineering, the actxps package contains
 a function called <code>step_expose()</code> that is compatible with the
-recipes package from tidymodels. This function can be used to apply the
+recipes package from tidymodels. This function applies the
 <code>expose()</code> function within a recipe.</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(recipes)</span>

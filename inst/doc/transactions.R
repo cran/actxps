@@ -54,6 +54,25 @@ trx_res <- exposed_trx_w_av |>
 glimpse(trx_res)
 
 
+## ----trx-conf1----------------------------------------------------------------
+exposed_trx |> 
+  group_by(pol_yr) |> 
+  trx_stats(conf_int = TRUE) |> 
+  select(pol_yr, trx_util, trx_util_lower, trx_util_upper)
+
+## ----trx-conf2----------------------------------------------------------------
+exposed_trx |> 
+  group_by(pol_yr) |> 
+  trx_stats(conf_int = TRUE, conf_level = 0.9) |> 
+  select(pol_yr, trx_util, trx_util_lower, trx_util_upper)
+
+## ----trx-conf3----------------------------------------------------------------
+exposed_trx_w_av |> 
+  group_by(pol_yr) |> 
+  trx_stats(conf_int = TRUE, percent_of = "av_anniv") |> 
+  select(pol_yr, starts_with("pct_of")) |> 
+  glimpse()
+
 ## ----trx-plot, warning=FALSE, message=FALSE, fig.height=5.5, fig.width=7------
 
 library(ggplot2)

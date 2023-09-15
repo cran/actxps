@@ -91,7 +91,7 @@ exposed_data2 |>
 ## ----cred2--------------------------------------------------------------------
 exposed_data2 |> 
   group_by(pol_yr, inc_guar) |>
-  exp_stats(credibility = TRUE, cred_p = 0.98, cred_r = 0.03) |> 
+  exp_stats(credibility = TRUE, conf_level = 0.98, cred_r = 0.03) |> 
   select(pol_yr, inc_guar, claims, q_obs, credibility)
 
 ## ----cred3--------------------------------------------------------------------
@@ -100,6 +100,24 @@ exposed_data2 |>
   exp_stats(credibility = TRUE, expected = "expected_1") |> 
   select(pol_yr, inc_guar, claims, q_obs, credibility, adj_expected_1, 
          expected_1, ae_expected_1)
+
+## ----conf1--------------------------------------------------------------------
+exposed_data2 |> 
+  group_by(pol_yr, inc_guar) |>
+  exp_stats(conf_int = TRUE) |> 
+  select(pol_yr, inc_guar, q_obs, q_obs_lower, q_obs_upper)
+
+## ----conf2--------------------------------------------------------------------
+exposed_data2 |> 
+  group_by(pol_yr, inc_guar) |>
+  exp_stats(conf_int = TRUE, conf_level = 0.9) |> 
+  select(pol_yr, inc_guar, q_obs, q_obs_lower, q_obs_upper)
+
+## ----conf3--------------------------------------------------------------------
+exposed_data2 |> 
+  group_by(pol_yr, inc_guar) |>
+  exp_stats(conf_int = TRUE, expected = "expected_1") |> 
+  select(pol_yr, inc_guar, starts_with("ae_"))
 
 ## ----summary1-----------------------------------------------------------------
 summary(exp_res)

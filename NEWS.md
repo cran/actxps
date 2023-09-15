@@ -1,6 +1,43 @@
+# actxps 1.3.0
+
+- A new `conf_int` argument was added to `exp_stats()` and that creates confidence 
+intervals around observed termination rates, credibility-weighted termination 
+rates, and any actual-to-expected ratios.
+- Similarly, `conf_int` was added to `trx_stats()` to create confidence intervals around utilization rates and any "percentage of" output columns. A `conf_level`
+argument was also added to this function.
+- `autoplot.exp_df()` and `autoplot.trx_df()` now have a `conf_int_bars` argument 
+that plots confidence intervals (if available) as error bars for the selected 
+y-variable
+- `autoplot.exp_df()` and `autoplot.trx_df()` can now create scatter plots if
+"points" is passed to the `geoms` argument.
+- The second y-axis in the `autoplot()` methods was updated to use an area 
+geometry instead of bars for discrete x-axis variables. In addition, when a 
+log-10 y-scale is used, areas will always be positive quantities. Previously,
+it was observed that areas were drawn as negative values for y-values on the 
+main scale less than 1.
+- `autotable.exp_df()` and `autotable.trx_df()` were updated to format 
+intervals.
+- `exp_shiny()` updates
+
+  - The layout and theme were updated in to align with changes made in shiny 
+    1.7.5 and bslib 0.5.1
+  - The function now includes the ability to customize the Bootstrap theme
+  - Plots can now be re-sized and viewed in full screen mode
+  - Tables contain new customization options and can be viewed in full screen mode
+  - Tables and plots can be exported
+  - Both the plots and tables optionally include confidence intervals
+  - Tooltips were added throughout to explain the UI
+  - A play / pause button was added to suspend interactivity on demand
+  - A description of filters was added to the sidebar
+
+- **Breaking change** - The confidence level argument `cred_p` was renamed to 
+`conf_level`. This change was made because the confidence level is no longer 
+strictly used for credibility calculations. This change impacts the functions
+`exp_stats()` and `exp_shiny()`.
+
 # actxps 1.2.0
 
-- `autoplot.exp_df` and `autoplot.trx_df()` now include new options for adding a second y-axis and plotting results on a log-10 scale. The second y-axis defaults to plotting exposures using an area geometry.
+- `autoplot.exp_df()` and `autoplot.trx_df()` now include new options for adding a second y-axis and plotting results on a log-10 scale. The second y-axis defaults to plotting exposures using an area geometry.
 - New plotting functions were added to create common experience analysis plots that were not simple to create using `autoplot()` methods. These include `plot_termination_rates()` and `plot_actual_to_expected()` for termination studies and `plot_utilization_rates()` for transaction studies
 - The `exp_shiny()` function received a handful of updates to accommodate new plotting functions and options. A small performance improvement was added in filtering logic as well. New options include a title input, credibility options taken from `exp_stats()`, 
 - A new vignette was added on data visualization.
