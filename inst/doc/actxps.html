@@ -497,41 +497,40 @@ one record for each unique group.</p>
 of expected termination rates to the exposure data. Then, pass these
 column names to the <code>expected</code> argument of
 <code>exp_stats()</code>.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>expected_table <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">seq</span>(<span class="fl">0.005</span>, <span class="fl">0.03</span>, <span class="at">length.out =</span> <span class="dv">10</span>), <span class="fl">0.2</span>, <span class="fl">0.15</span>, <span class="fu">rep</span>(<span class="fl">0.05</span>, <span class="dv">3</span>))</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co"># using 2 different expected termination rates</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>exposed_data <span class="ot">&lt;-</span> exposed_data <span class="sc">|&gt;</span></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">expected_1 =</span> expected_table[pol_yr],</span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">expected_2 =</span> <span class="fu">ifelse</span>(exposed_data<span class="sc">$</span>inc_guar, <span class="fl">0.015</span>, <span class="fl">0.03</span>))</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>exp_res <span class="ot">&lt;-</span> exposed_data <span class="sc">|&gt;</span></span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(pol_yr, inc_guar) <span class="sc">|&gt;</span></span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">exp_stats</span>(<span class="at">expected =</span> <span class="fu">c</span>(<span class="st">&quot;expected_1&quot;</span>, <span class="st">&quot;expected_2&quot;</span>))</span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>exp_res</span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Experience study results</span></span>
-<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Groups: pol_yr, inc_guar </span></span>
-<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Target status: Surrender </span></span>
-<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Study range: 1900-01-01 to 2019-12-31 </span></span>
-<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Expected values: expected_1, expected_2 </span></span>
-<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 30 × 10</span></span>
-<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    pol_yr inc_guar n_claims claims exposure   q_obs expected_1 expected_2</span></span>
-<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     &lt;int&gt; &lt;lgl&gt;       &lt;int&gt;  &lt;int&gt;    &lt;dbl&gt;   &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;</span></span>
-<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1      1 FALSE          56     56    7720. 0.00725    0.005        0.03 </span></span>
-<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  2      1 TRUE           46     46   11532. 0.00399    0.005        0.015</span></span>
-<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  3      2 FALSE          92     92    7103. 0.0130     0.00778      0.03 </span></span>
-<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  4      2 TRUE           68     68   10612. 0.00641    0.00778      0.015</span></span>
-<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  5      3 FALSE          67     67    6447. 0.0104     0.0106       0.03 </span></span>
-<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  6      3 TRUE           57     57    9650. 0.00591    0.0106       0.015</span></span>
-<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  7      4 FALSE         123    123    5799. 0.0212     0.0133       0.03 </span></span>
-<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  8      4 TRUE           45     45    8737. 0.00515    0.0133       0.015</span></span>
-<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  9      5 FALSE          97     97    5106. 0.0190     0.0161       0.03 </span></span>
-<span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10      5 TRUE           67     67    7810. 0.00858    0.0161       0.015</span></span>
-<span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # ℹ 20 more rows</span></span>
-<span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # ℹ 2 more variables: ae_expected_1 &lt;dbl&gt;, ae_expected_2 &lt;dbl&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>expected_table <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">seq</span>(<span class="fl">0.005</span>, <span class="fl">0.03</span>, <span class="at">length.out =</span> <span class="dv">10</span>), <span class="fl">0.2</span>, <span class="fl">0.15</span>, <span class="fu">rep</span>(<span class="fl">0.05</span>, <span class="dv">3</span>))</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co"># using 2 different expected termination rates</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>exposed_data <span class="ot">&lt;-</span> exposed_data <span class="sc">|&gt;</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">expected_1 =</span> expected_table[pol_yr],</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">expected_2 =</span> <span class="fu">ifelse</span>(exposed_data<span class="sc">$</span>inc_guar, <span class="fl">0.015</span>, <span class="fl">0.03</span>))</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>exp_res <span class="ot">&lt;-</span> exposed_data <span class="sc">|&gt;</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(pol_yr, inc_guar) <span class="sc">|&gt;</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">exp_stats</span>(<span class="at">expected =</span> <span class="fu">c</span>(<span class="st">&quot;expected_1&quot;</span>, <span class="st">&quot;expected_2&quot;</span>))</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>exp_res</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Experience study results</span></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Groups: pol_yr, inc_guar </span></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Target status: Surrender </span></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Study range: 1900-01-01 to 2019-12-31 </span></span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Expected values: expected_1, expected_2 </span></span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 30 × 10</span></span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    pol_yr inc_guar n_claims claims exposure   q_obs expected_1 expected_2</span></span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     &lt;int&gt; &lt;lgl&gt;       &lt;int&gt;  &lt;int&gt;    &lt;dbl&gt;   &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;</span></span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1      1 FALSE          56     56    7720. 0.00725    0.005        0.03 </span></span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  2      1 TRUE           46     46   11532. 0.00399    0.005        0.015</span></span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  3      2 FALSE          92     92    7103. 0.0130     0.00778      0.03 </span></span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  4      2 TRUE           68     68   10612. 0.00641    0.00778      0.015</span></span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  5      3 FALSE          67     67    6447. 0.0104     0.0106       0.03 </span></span>
+<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  6      3 TRUE           57     57    9650. 0.00591    0.0106       0.015</span></span>
+<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  7      4 FALSE         123    123    5799. 0.0212     0.0133       0.03 </span></span>
+<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  8      4 TRUE           45     45    8737. 0.00515    0.0133       0.015</span></span>
+<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  9      5 FALSE          97     97    5106. 0.0190     0.0161       0.03 </span></span>
+<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10      5 TRUE           67     67    7810. 0.00858    0.0161       0.015</span></span>
+<span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # ℹ 20 more rows</span></span>
+<span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # ℹ 2 more variables: ae_expected_1 &lt;dbl&gt;, ae_expected_2 &lt;dbl&gt;</span></span></code></pre></div>
 </div>
 <div id="autoplot-and-autotable" class="section level3">
 <h3><code>autoplot()</code> and <code>autotable()</code></h3>

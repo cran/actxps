@@ -10,9 +10,19 @@ actxps:::set_actxps_plot_theme()
 library(actxps)
 library(lubridate)
 
+## ----agg-exp-1----------------------------------------------------------------
+agg_sim_exp_df <- agg_sim_dat |> 
+  as_exp_df(col_exposure = "exposure_n", col_claims = "claims_n",
+            conf_int = TRUE,
+            start_date = 2005, end_date = 2019, target_status = "Surrender")
+
+## ----agg-exp-2----------------------------------------------------------------
+summary(agg_sim_exp_df, pol_yr)
+
+## ----agg-exp-3----------------------------------------------------------------
+summary(agg_sim_exp_df, inc_guar, product)
+
 ## ----pol-dur1-----------------------------------------------------------------
-
-
 dates <- ymd("2022-12-31") + years(0:10)
 
 # policy years
@@ -30,7 +40,6 @@ pol_wk(dates, "2022-05-10")
 
 
 ## ----pol-dur2-----------------------------------------------------------------
-
 # days
 pol_interval(dates, "2022-05-10", days(1))
 
@@ -39,7 +48,6 @@ pol_interval(dates, "2022-05-10", weeks(2))
 
 
 ## ----add-preds, fig.height=4, fig.width=5-------------------------------------
-
 # create exposure records
 exposed_data <- expose(census_dat, end_date = "2019-12-31",
                        target_status = "Surrender") |> 

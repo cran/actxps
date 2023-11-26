@@ -42,7 +42,6 @@ exp_res <- exposed_data |>
 exp_res
 
 ## ----stats-ae-----------------------------------------------------------------
-
 expected_table <- c(seq(0.005, 0.03, length.out = 10), 0.2, 0.15, rep(0.05, 3))
 
 # using 2 different expected termination rates

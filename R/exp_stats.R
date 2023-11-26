@@ -94,7 +94,7 @@
 #' (`.weight_qs`), and the number of records (`.weight_n`).
 #'
 #' @examples
-#' toy_census |> expose("2020-12-31", target_status = "Surrender") |>
+#' toy_census |> expose("2022-12-31", target_status = "Surrender") |>
 #'     exp_stats()
 #'
 #' exp_res <- census_dat |>
@@ -130,6 +130,8 @@ exp_stats <- function(.data, target_status = attr(.data, "target_status"),
   if (length(wt) > 1) {
     rlang::abort(c(x = glue::glue("Only 1 column can be passed to `wt`. You supplied {length(wt)} values.")))
   }
+
+  check_split_expose_basis(.data, col_exposure)
 
   res <- .data |>
     rename(exposure = {{col_exposure}},
@@ -280,7 +282,7 @@ finish_exp_stats <- function(.data, target_status, expected,
       ci <- rlang::exprs(
         # For binomial N
         # Var(S) = n * p * (Var(X) + E(X)^2 * (1 - p))
-        sd_agg = (claims * (
+        sd_agg = (n_claims * (
           (ex2_wt - ex_wt ^ 2) + ex_wt ^ 2 * (1 - q_obs))) ^ 0.5,
         q_obs_lower = stats::qnorm(p[[1]], claims, sd_agg) / exposure,
         q_obs_upper = stats::qnorm(p[[2]], claims, sd_agg) / exposure
@@ -330,7 +332,23 @@ finish_exp_stats <- function(.data, target_status, expected,
                .after = dplyr::last_col())
   }
 
-  tibble::new_tibble(res,
+  new_exp_df(res,
+             .groups = .groups,
+             target_status = target_status,
+             start_date = start_date,
+             expected = expected,
+             end_date = end_date,
+             wt = wt,
+             credibility = credibility,
+             conf_level = conf_level, cred_r = cred_r,
+             conf_int = conf_int)
+}
+
+# low level class constructor
+new_exp_df <- function(x, .groups, target_status, start_date, expected,
+                       end_date, wt, credibility, conf_level,
+                       cred_r = cred_r, conf_int) {
+  tibble::new_tibble(x,
                      class = "exp_df",
                      groups = .groups,
                      target_status = target_status,
@@ -339,7 +357,8 @@ finish_exp_stats <- function(.data, target_status, expected,
                      end_date = end_date,
                      wt = wt,
                      xp_params = list(credibility = credibility,
-                                      conf_level = conf_level, cred_r = cred_r,
+                                      conf_level = conf_level,
+                                      cred_r = cred_r,
                                       conf_int = conf_int))
 }
 

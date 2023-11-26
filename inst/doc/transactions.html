@@ -386,34 +386,33 @@ class <code>exposed_df</code>. For our example, we first need to convert
 <code>census_dat</code> into exposure records using the
 <code>expose()</code> function.<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> This example will use policy year
 exposures.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(actxps)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>exposed_data <span class="ot">&lt;-</span> <span class="fu">expose_py</span>(census_dat, <span class="st">&quot;2019-12-31&quot;</span>, <span class="at">target_status =</span> <span class="st">&quot;Surrender&quot;</span>)</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>exposed_data</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Exposure data</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Exposure type: policy_year </span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Target status: Surrender </span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Study range: 1900-01-01 to 2019-12-31</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 141,252 × 15</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    pol_num status issue_date inc_guar qual    age product gender wd_age premium</span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;      &lt;int&gt; &lt;fct&gt;  &lt;date&gt;     &lt;lgl&gt;    &lt;lgl&gt; &lt;int&gt; &lt;fct&gt;   &lt;fct&gt;   &lt;int&gt;   &lt;dbl&gt;</span></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1       1 Active 2014-12-17 TRUE     FALSE    56 b       F          77     370</span></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  2       1 Active 2014-12-17 TRUE     FALSE    56 b       F          77     370</span></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  3       1 Active 2014-12-17 TRUE     FALSE    56 b       F          77     370</span></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  4       1 Active 2014-12-17 TRUE     FALSE    56 b       F          77     370</span></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  5       1 Active 2014-12-17 TRUE     FALSE    56 b       F          77     370</span></span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  6       1 Active 2014-12-17 TRUE     FALSE    56 b       F          77     370</span></span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  7       2 Active 2007-09-24 FALSE    FALSE    71 a       F          71     708</span></span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  8       2 Active 2007-09-24 FALSE    FALSE    71 a       F          71     708</span></span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  9       2 Active 2007-09-24 FALSE    FALSE    71 a       F          71     708</span></span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10       2 Active 2007-09-24 FALSE    FALSE    71 a       F          71     708</span></span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # ℹ 141,242 more rows</span></span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # ℹ 5 more variables: term_date &lt;date&gt;, pol_yr &lt;int&gt;, pol_date_yr &lt;date&gt;,</span></span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   pol_date_yr_end &lt;date&gt;, exposure &lt;dbl&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(actxps)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>exposed_data <span class="ot">&lt;-</span> <span class="fu">expose_py</span>(census_dat, <span class="st">&quot;2019-12-31&quot;</span>, <span class="at">target_status =</span> <span class="st">&quot;Surrender&quot;</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>exposed_data</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Exposure data</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Exposure type: policy_year </span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Target status: Surrender </span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Study range: 1900-01-01 to 2019-12-31</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 141,252 × 15</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    pol_num status issue_date inc_guar qual    age product gender wd_age premium</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;      &lt;int&gt; &lt;fct&gt;  &lt;date&gt;     &lt;lgl&gt;    &lt;lgl&gt; &lt;int&gt; &lt;fct&gt;   &lt;fct&gt;   &lt;int&gt;   &lt;dbl&gt;</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1       1 Active 2014-12-17 TRUE     FALSE    56 b       F          77     370</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  2       1 Active 2014-12-17 TRUE     FALSE    56 b       F          77     370</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  3       1 Active 2014-12-17 TRUE     FALSE    56 b       F          77     370</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  4       1 Active 2014-12-17 TRUE     FALSE    56 b       F          77     370</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  5       1 Active 2014-12-17 TRUE     FALSE    56 b       F          77     370</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  6       1 Active 2014-12-17 TRUE     FALSE    56 b       F          77     370</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  7       2 Active 2007-09-24 FALSE    FALSE    71 a       F          71     708</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  8       2 Active 2007-09-24 FALSE    FALSE    71 a       F          71     708</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  9       2 Active 2007-09-24 FALSE    FALSE    71 a       F          71     708</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10       2 Active 2007-09-24 FALSE    FALSE    71 a       F          71     708</span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # ℹ 141,242 more rows</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # ℹ 5 more variables: term_date &lt;date&gt;, pol_yr &lt;int&gt;, pol_date_yr &lt;date&gt;,</span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   pol_date_yr_end &lt;date&gt;, exposure &lt;dbl&gt;</span></span></code></pre></div>
 <p>The <code>withdrawals</code> data has 4 columns that are required for
 attaching transactions:</p>
 <ul>
@@ -569,49 +568,47 @@ of an income guarantee (<code>inc_guar</code>) before being passed to
 <code>trx_stats()</code>. This results in four rows because we have two
 types of transactions and two distinct values of
 <code>inc_guar</code>.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>exposed_trx <span class="sc">|&gt;</span> </span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(inc_guar) <span class="sc">|&gt;</span> </span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">trx_stats</span>()</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Transaction study results</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Groups: inc_guar </span></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Study range: 1900-01-01 to 2019-12-31 </span></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Transaction types: Base, Rider </span></span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 4 × 10</span></span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   inc_guar trx_type trx_n trx_flag trx_amt exposure avg_trx avg_all trx_freq</span></span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;lgl&gt;    &lt;chr&gt;    &lt;dbl&gt;    &lt;int&gt;   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;</span></span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 FALSE    Base     52939    24703  952629    48938    38.6   19.5      2.14</span></span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 FALSE    Rider        0        0       0    48938   NaN      0      NaN   </span></span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3 TRUE     Base      7561     3521  141270    75235    40.1    1.88     2.15</span></span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4 TRUE     Rider    77321    35941 2842729    75235    79.1   37.8      2.15</span></span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # ℹ 1 more variable: trx_util &lt;dbl&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>exposed_trx <span class="sc">|&gt;</span> </span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(inc_guar) <span class="sc">|&gt;</span> </span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">trx_stats</span>()</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Transaction study results</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Groups: inc_guar </span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Study range: 1900-01-01 to 2019-12-31 </span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Transaction types: Base, Rider </span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 4 × 10</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   inc_guar trx_type trx_n trx_flag trx_amt exposure avg_trx avg_all trx_freq</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;lgl&gt;    &lt;chr&gt;    &lt;dbl&gt;    &lt;int&gt;   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 FALSE    Base     52939    24703  952629    48938    38.6   19.5      2.14</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 FALSE    Rider        0        0       0    48938   NaN      0      NaN   </span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3 TRUE     Base      7561     3521  141270    75235    40.1    1.88     2.15</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4 TRUE     Rider    77321    35941 2842729    75235    79.1   37.8      2.15</span></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # ℹ 1 more variable: trx_util &lt;dbl&gt;</span></span></code></pre></div>
 <p>Multiple grouping variables are allowed. Below, policy year
 (<code>pol_yr</code>) is added as a second grouping variable.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>exposed_trx <span class="sc">|&gt;</span> </span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(pol_yr, inc_guar) <span class="sc">|&gt;</span> </span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">trx_stats</span>()</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Transaction study results</span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Groups: pol_yr, inc_guar </span></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Study range: 1900-01-01 to 2019-12-31 </span></span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Transaction types: Base, Rider </span></span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 60 × 11</span></span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    pol_yr inc_guar trx_type trx_n trx_flag trx_amt exposure avg_trx avg_all</span></span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     &lt;int&gt; &lt;lgl&gt;    &lt;chr&gt;    &lt;dbl&gt;    &lt;int&gt;   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;</span></span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1      1 FALSE    Base      6077     2881   98287     7435    34.1   13.2 </span></span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  2      1 FALSE    Rider        0        0       0     7435   NaN      0   </span></span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  3      1 TRUE     Base      1370      633   21590    11106    34.1    1.94</span></span>
-<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  4      1 TRUE     Rider     8077     3778  265312    11106    70.2   23.9 </span></span>
-<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  5      2 FALSE    Base      6091     2863   98413     6813    34.4   14.4 </span></span>
-<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  6      2 FALSE    Rider        0        0       0     6813   NaN      0   </span></span>
-<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  7      2 TRUE     Base      1183      559   18554    10158    33.2    1.83</span></span>
-<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  8      2 TRUE     Rider     8232     3834  288114    10158    75.1   28.4 </span></span>
-<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  9      3 FALSE    Base      6016     2813   97285     6176    34.6   15.8 </span></span>
-<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10      3 FALSE    Rider        0        0       0     6176   NaN      0   </span></span>
-<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # ℹ 50 more rows</span></span>
-<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # ℹ 2 more variables: trx_freq &lt;dbl&gt;, trx_util &lt;dbl&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>exposed_trx <span class="sc">|&gt;</span> </span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(pol_yr, inc_guar) <span class="sc">|&gt;</span> </span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">trx_stats</span>()</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Transaction study results</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Groups: pol_yr, inc_guar </span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Study range: 1900-01-01 to 2019-12-31 </span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Transaction types: Base, Rider </span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 60 × 11</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    pol_yr inc_guar trx_type trx_n trx_flag trx_amt exposure avg_trx avg_all</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     &lt;int&gt; &lt;lgl&gt;    &lt;chr&gt;    &lt;dbl&gt;    &lt;int&gt;   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1      1 FALSE    Base      6077     2881   98287     7435    34.1   13.2 </span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  2      1 FALSE    Rider        0        0       0     7435   NaN      0   </span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  3      1 TRUE     Base      1370      633   21590    11106    34.1    1.94</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  4      1 TRUE     Rider     8077     3778  265312    11106    70.2   23.9 </span></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  5      2 FALSE    Base      6091     2863   98413     6813    34.4   14.4 </span></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  6      2 FALSE    Rider        0        0       0     6813   NaN      0   </span></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  7      2 TRUE     Base      1183      559   18554    10158    33.2    1.83</span></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  8      2 TRUE     Rider     8232     3834  288114    10158    75.1   28.4 </span></span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  9      3 FALSE    Base      6016     2813   97285     6176    34.6   15.8 </span></span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10      3 FALSE    Rider        0        0       0     6176   NaN      0   </span></span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # ℹ 50 more rows</span></span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # ℹ 2 more variables: trx_freq &lt;dbl&gt;, trx_util &lt;dbl&gt;</span></span></code></pre></div>
 </div>
 </div>
 <div id="expressing-transactions-as-a-percentage-of-another-value" class="section level2">
@@ -639,33 +636,32 @@ transaction occurs (<code>pct_of_{*}_w_trx</code>)</li>
 withdrawal transactions as a percentage of account values, which are
 available in the <code>account_vals</code> data frame in the column
 <code>av_anniv</code>.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co"># attach account values data</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>exposed_trx_w_av <span class="ot">&lt;-</span> exposed_trx <span class="sc">|&gt;</span> </span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(account_vals, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;pol_num&quot;</span>, <span class="st">&quot;pol_date_yr&quot;</span>))</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>trx_res <span class="ot">&lt;-</span> exposed_trx_w_av <span class="sc">|&gt;</span> </span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(pol_yr, inc_guar) <span class="sc">|&gt;</span> </span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">trx_stats</span>(<span class="at">percent_of =</span> <span class="st">&quot;av_anniv&quot;</span>)</span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(trx_res)</span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Rows: 60</span></span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Columns: 15</span></span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ pol_yr                &lt;int&gt; 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, …</span></span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ inc_guar              &lt;lgl&gt; FALSE, FALSE, TRUE, TRUE, FALSE, FALSE, TRUE, TR…</span></span>
-<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ trx_type              &lt;chr&gt; &quot;Base&quot;, &quot;Rider&quot;, &quot;Base&quot;, &quot;Rider&quot;, &quot;Base&quot;, &quot;Rider…</span></span>
-<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ trx_n                 &lt;dbl&gt; 6077, 0, 1370, 8077, 6091, 0, 1183, 8232, 6016, …</span></span>
-<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ trx_flag              &lt;int&gt; 2881, 0, 633, 3778, 2863, 0, 559, 3834, 2813, 0,…</span></span>
-<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ trx_amt               &lt;dbl&gt; 98287, 0, 21590, 265312, 98413, 0, 18554, 288114…</span></span>
-<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ exposure              &lt;dbl&gt; 7435, 7435, 11106, 11106, 6813, 6813, 10158, 101…</span></span>
-<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ avg_trx               &lt;dbl&gt; 34.11558, NaN, 34.10742, 70.22552, 34.37408, NaN…</span></span>
-<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ avg_all               &lt;dbl&gt; 13.219502, 0.000000, 1.943994, 23.889069, 14.444…</span></span>
-<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ trx_freq              &lt;dbl&gt; 2.109337, NaN, 2.164297, 2.137904, 2.127489, NaN…</span></span>
-<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ trx_util              &lt;dbl&gt; 0.38749159, 0.00000000, 0.05699622, 0.34017648, …</span></span>
-<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ av_anniv_w_trx        &lt;dbl&gt; 3875306, 0, 865046, 4982082, 3909786, 0, 797932,…</span></span>
-<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ av_anniv              &lt;dbl&gt; 9686914, 9686914, 14679001, 14679001, 9218561, 9…</span></span>
-<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ pct_of_av_anniv_w_trx &lt;dbl&gt; 0.02536238, NaN, 0.02495821, 0.05325324, 0.02517…</span></span>
-<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ pct_of_av_anniv_all   &lt;dbl&gt; 0.010146369, 0.000000000, 0.001470809, 0.0180742…</span></span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># attach account values data</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>exposed_trx_w_av <span class="ot">&lt;-</span> exposed_trx <span class="sc">|&gt;</span> </span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(account_vals, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;pol_num&quot;</span>, <span class="st">&quot;pol_date_yr&quot;</span>))</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>trx_res <span class="ot">&lt;-</span> exposed_trx_w_av <span class="sc">|&gt;</span> </span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(pol_yr, inc_guar) <span class="sc">|&gt;</span> </span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">trx_stats</span>(<span class="at">percent_of =</span> <span class="st">&quot;av_anniv&quot;</span>)</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(trx_res)</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Rows: 60</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Columns: 15</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ pol_yr                &lt;int&gt; 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, …</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ inc_guar              &lt;lgl&gt; FALSE, FALSE, TRUE, TRUE, FALSE, FALSE, TRUE, TR…</span></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ trx_type              &lt;chr&gt; &quot;Base&quot;, &quot;Rider&quot;, &quot;Base&quot;, &quot;Rider&quot;, &quot;Base&quot;, &quot;Rider…</span></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ trx_n                 &lt;dbl&gt; 6077, 0, 1370, 8077, 6091, 0, 1183, 8232, 6016, …</span></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ trx_flag              &lt;int&gt; 2881, 0, 633, 3778, 2863, 0, 559, 3834, 2813, 0,…</span></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ trx_amt               &lt;dbl&gt; 98287, 0, 21590, 265312, 98413, 0, 18554, 288114…</span></span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ exposure              &lt;dbl&gt; 7435, 7435, 11106, 11106, 6813, 6813, 10158, 101…</span></span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ avg_trx               &lt;dbl&gt; 34.11558, NaN, 34.10742, 70.22552, 34.37408, NaN…</span></span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ avg_all               &lt;dbl&gt; 13.219502, 0.000000, 1.943994, 23.889069, 14.444…</span></span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ trx_freq              &lt;dbl&gt; 2.109337, NaN, 2.164297, 2.137904, 2.127489, NaN…</span></span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ trx_util              &lt;dbl&gt; 0.38749159, 0.00000000, 0.05699622, 0.34017648, …</span></span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ av_anniv_w_trx        &lt;dbl&gt; 3875306, 0, 865046, 4982082, 3909786, 0, 797932,…</span></span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ av_anniv              &lt;dbl&gt; 9686914, 9686914, 14679001, 14679001, 9218561, 9…</span></span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ pct_of_av_anniv_w_trx &lt;dbl&gt; 0.02536238, NaN, 0.02495821, 0.05325324, 0.02517…</span></span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ pct_of_av_anniv_all   &lt;dbl&gt; 0.010146369, 0.000000000, 0.001470809, 0.0180742…</span></span></code></pre></div>
 </div>
 <div id="confidence-intervals" class="section level2">
 <h2>Confidence intervals</h2>
@@ -761,13 +757,12 @@ variable for transaction utilization.</p>
 create visualizations and summary tables from <code>trx_df</code>
 objects. See <code>vignette(&quot;visualizations&quot;)</code> for full details on
 these functions.</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>trx_res <span class="sc">|&gt;</span></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># remove periods with zero transactions</span></span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(trx_n <span class="sc">&gt;</span> <span class="dv">0</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(<span class="at">y =</span> pct_of_av_anniv_w_trx)</span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>trx_res <span class="sc">|&gt;</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># remove periods with zero transactions</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(trx_n <span class="sc">&gt;</span> <span class="dv">0</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(<span class="at">y =</span> pct_of_av_anniv_w_trx)</span></code></pre></div>
 <p><img src="data:image/png;base64,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" /><!-- --></p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>trx_res <span class="sc">|&gt;</span> </span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># remove periods with zero transactions</span></span>

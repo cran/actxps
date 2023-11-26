@@ -7,7 +7,6 @@ knitr::opts_chunk$set(
 actxps:::set_actxps_plot_theme()
 
 ## ----packages-----------------------------------------------------------------
-
 library(actxps)
 library(dplyr)
 
@@ -28,21 +27,18 @@ exposed_trx
 trx_stats(exposed_trx)
 
 ## ----grouped-1----------------------------------------------------------------
-
 exposed_trx |> 
   group_by(inc_guar) |> 
   trx_stats()
 
 
 ## ----grouped-2----------------------------------------------------------------
-
 exposed_trx |> 
   group_by(pol_yr, inc_guar) |> 
   trx_stats()
 
 
 ## ----pct-of-------------------------------------------------------------------
-
 # attach account values data
 exposed_trx_w_av <- exposed_trx |> 
   left_join(account_vals, by = c("pol_num", "pol_date_yr"))
@@ -74,7 +70,6 @@ exposed_trx_w_av |>
   glimpse()
 
 ## ----trx-plot, warning=FALSE, message=FALSE, fig.height=5.5, fig.width=7------
-
 library(ggplot2)
 
 trx_res |>

@@ -25,21 +25,18 @@ exp_stats(exposed_data)
 amount / sum_expo
 
 ## ----grouped-1----------------------------------------------------------------
-
 exposed_data |> 
   group_by(pol_yr) |> 
   exp_stats()
 
 
 ## ----grouped-2----------------------------------------------------------------
-
 exposed_data |> 
   group_by(inc_guar, pol_yr) |> 
   exp_stats()
 
 
 ## ----targ-status--------------------------------------------------------------
-
 exposed_data |> 
   mutate(exposure = ifelse(status == "Death", 1, status)) |> 
   group_by(pol_yr) |> 
@@ -47,14 +44,12 @@ exposed_data |>
 
 
 ## ----weight-res---------------------------------------------------------------
-
 exposed_data |> 
   group_by(pol_yr) |> 
   exp_stats(wt = 'premium')
 
 
 ## ----act-exp------------------------------------------------------------------
-
 expected_table <- c(seq(0.005, 0.03, length.out = 10), 0.2, 0.15, rep(0.05, 3))
 
 # using 2 different expected termination assumption sets
@@ -73,7 +68,6 @@ exp_res |>
 
 
 ## ----act-exp-wt---------------------------------------------------------------
-
 exposed_data2 |>
   group_by(pol_yr, inc_guar) |>
   exp_stats(expected = c("expected_1", "expected_2"), 
@@ -133,7 +127,6 @@ summary(exp_res, inc_guar)
 #    exp_stats(col_status = "curr_stat")
 
 ## ----not-exposed_df-----------------------------------------------------------
-
 not_exposed_df <- data.frame(exposed_data)
 
 exp_stats(not_exposed_df)

@@ -11,7 +11,6 @@ library(dplyr)
 toy_census
 
 ## ----expose-1-----------------------------------------------------------------
-
 exposed_data <- expose(toy_census, end_date = "2022-12-31")
 
 
@@ -40,20 +39,44 @@ exposed_data2 |>
   slice_max(pol_yr)
 
 ## ----expo-cal-----------------------------------------------------------------
-
-toy_census[2, ] |> 
+exposed_cal <- toy_census |> 
   expose(end_date = "2022-12-31", cal_expo = TRUE, target_status = "Surrender")
+
+exposed_cal |> filter(pol_num == 2)
 
 
 ## ----expo-mth-----------------------------------------------------------------
-toy_census[2, ] |> 
+toy_census |> 
   expose(end_date = "2022-12-31", 
          cal_expo = TRUE,
          expo_length = "quarter", 
-         target_status = "Surrender")
+         target_status = "Surrender") |> 
+  filter(pol_num == 2)
+
+## ----expo-split---------------------------------------------------------------
+split <- expose_split(exposed_cal)
+
+split |> filter(pol_num == 2) |> 
+  select(cal_yr, cal_yr_end, pol_yr, exposure_pol, exposure_cal)
+
+## ---- split-stats-unclear, eval = FALSE---------------------------------------
+#  exp_stats(split)
+
+## ----split-stats-unclear-cat, echo = FALSE------------------------------------
+
+tryCatch(exp_stats(split),
+         error = function(e) cat(e$message))
+
+## ---- split-stats-clear-------------------------------------------------------
+exp_stats(split, col_exposure = "exposure_pol")
+
+## ---- split-qtr---------------------------------------------------------------
+expose_cq(toy_census, "2022-12-31", target_status = "Surrender") |> 
+  expose_split() |> 
+  filter(pol_num == 2) |> 
+  select(cal_qtr, cal_qtr_end, pol_yr, exposure_pol, exposure_cal)
 
 ## ----rec-expose---------------------------------------------------------------
-
 library(recipes)
 
 expo_rec <- recipe(status ~ ., toy_census) |>
@@ -90,7 +113,6 @@ expose(toy_census2, end_date = "2022-12-31",
 #  
 
 ## ----combine-1----------------------------------------------------------------
-
 exposed_data2 <- expose(toy_census, 
                         end_date = "2023-12-31", 
                         start_date = "1890-01-01",

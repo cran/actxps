@@ -349,6 +349,97 @@ vignettes.</p>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; The following objects are masked from &#39;package:base&#39;:</span></span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     date, intersect, setdiff, union</span></span></code></pre></div>
+<div id="working-with-aggregate-experience-data" class="section level2">
+<h2>Working with aggregate experience data</h2>
+<p>Seriatim-level policy experience data is often not available for
+analysis. This is almost always the case with industry studies that
+contain experience data submitted by multiple parties. In these cases,
+experience is grouped by a several common policy attributes and
+aggregated accordingly.</p>
+<p>The typical workflow in actxps of
+<code>expose() |&gt; exp_stats()</code> for termination studies or
+<code>expose() |&gt; add_transactions() |&gt; trx_stats()</code> for
+transaction studies doesn’t apply if the starting data is aggregated.
+That is because another party has already gone through the steps of
+creating exposure records and performing an initial level of
+aggregation.</p>
+<p>Actxps provides two functions designed to work with aggregate
+experience data.</p>
+<ul>
+<li>For termination studies, <code>as_exp_df()</code> converts a data
+frame of aggregate experience into an <code>exp_df</code> object, which
+is the class returned by <code>exp_stats()</code> = For transaction
+studies, <code>as_trx_df()</code> converts a data frame of aggregate
+experience into a <code>trx_df</code> object, which is the class
+returned by <code>trx_stats()</code></li>
+</ul>
+<p>Both object classes have a <code>summary()</code> method which
+summarizes experience across any grouping variables passed to the
+function. The output of <code>summary()</code> will always be another
+<code>exp_df</code> (or <code>trx_df</code>) object, and will look just
+like the results of <code>exp_stats()</code> (or
+<code>trx_stats()</code>). For downstream reporting, summary results can
+be passed to the visualization functions <code>autoplot()</code> and
+<code>autotable()</code>.</p>
+<p>The <code>agg_sim_dat</code> data set contains aggregate experience
+on a theoretical block of deferred annuity contracts. Below,
+<code>as_exp_df()</code> is used to convert the data to an
+<code>exp_df</code>, and <code>summary()</code> is called using multiple
+grouping variables.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>agg_sim_exp_df <span class="ot">&lt;-</span> agg_sim_dat <span class="sc">|&gt;</span> </span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_exp_df</span>(<span class="at">col_exposure =</span> <span class="st">&quot;exposure_n&quot;</span>, <span class="at">col_claims =</span> <span class="st">&quot;claims_n&quot;</span>,</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">conf_int =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">start_date =</span> <span class="dv">2005</span>, <span class="at">end_date =</span> <span class="dv">2019</span>, <span class="at">target_status =</span> <span class="st">&quot;Surrender&quot;</span>)</span></code></pre></div>
+<p>Results summarized by policy year</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(agg_sim_exp_df, pol_yr)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Experience study results</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Groups: pol_yr </span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Target status: Surrender </span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Study range: 2005 to 2019 </span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 15 × 7</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    pol_yr n_claims claims exposure   q_obs q_obs_lower q_obs_upper</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     &lt;int&gt;    &lt;int&gt;  &lt;int&gt;    &lt;dbl&gt;   &lt;dbl&gt;       &lt;dbl&gt;       &lt;dbl&gt;</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1      1      102    102   19252. 0.00530     0.00431     0.00634</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  2      2      160    160   17715. 0.00903     0.00768     0.0104 </span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  3      3      124    124   16097. 0.00770     0.00640     0.00907</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  4      4      168    168   14536. 0.0116      0.00984     0.0133 </span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  5      5      164    164   12916. 0.0127      0.0108      0.0146 </span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  6      6      152    152   11376. 0.0134      0.0113      0.0155 </span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  7      7      164    164    9917. 0.0165      0.0141      0.0191 </span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  8      8      190    190    8448. 0.0225      0.0194      0.0257 </span></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  9      9      181    181    6960. 0.0260      0.0223      0.0297 </span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10     10      152    152    5604. 0.0271      0.0230      0.0314 </span></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 11     11      804    804    4390. 0.183       0.172       0.195  </span></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 12     12      330    330    2663. 0.124       0.112       0.137  </span></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 13     13       99     99    1620. 0.0611      0.0500      0.0728 </span></span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 14     14       62     62     872. 0.0711      0.0551      0.0883 </span></span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 15     15       17     17     268. 0.0634      0.0373      0.0932</span></span></code></pre></div>
+<p>Results summarized by income guarantee presence and product</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(agg_sim_exp_df, inc_guar, product)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Experience study results</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Groups: inc_guar, product </span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Target status: Surrender </span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Study range: 2005 to 2019 </span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 6 × 8</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   inc_guar product n_claims claims exposure  q_obs q_obs_lower q_obs_upper</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;lgl&gt;    &lt;fct&gt;      &lt;int&gt;  &lt;int&gt;    &lt;dbl&gt;  &lt;dbl&gt;       &lt;dbl&gt;       &lt;dbl&gt;</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 FALSE    a            449    449   12738. 0.0352      0.0321      0.0385</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 FALSE    b            392    392   13490. 0.0291      0.0262      0.0320</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3 FALSE    c            760    760   25895. 0.0293      0.0273      0.0314</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4 TRUE     a            361    361   19966. 0.0181      0.0163      0.0199</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5 TRUE     b            273    273   19694. 0.0139      0.0122      0.0155</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6 TRUE     c            634    634   40851. 0.0155      0.0143      0.0167</span></span></code></pre></div>
+<p><code>as_exp_df()</code> and <code>as_trx_df()</code> contain several
+arguments for optional calculations like confidence intervals, expected
+values, weighting variables, and more. These arguments mirror the
+functionality in <code>exp_stats()</code> and <code>trx_stats()</code>.
+Both functions also contain multiple arguments for specifying column
+names associated with required values like exposures and claims.</p>
+</div>
 <div id="policy-duration-functions" class="section level2">
 <h2>Policy duration functions</h2>
 <p>The <code>pol_()</code> family of functions calculates policy years,
@@ -357,37 +448,34 @@ accepts a vector of dates and a vector of issue dates.</p>
 <p><strong>Example</strong>: assume a policy was issued on 2022-05-10
 and we are interested in calculating various policy duration values at
 the end of calendar years 2022-2032.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>dates <span class="ot">&lt;-</span> <span class="fu">ymd</span>(<span class="st">&quot;2022-12-31&quot;</span>) <span class="sc">+</span> <span class="fu">years</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">10</span>)</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co"># policy years</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">pol_yr</span>(dates, <span class="st">&quot;2022-05-10&quot;</span>)</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [1]  1  2  3  4  5  6  7  8  9 10 11</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co"># policy quarters</span></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="fu">pol_qtr</span>(dates, <span class="st">&quot;2022-05-10&quot;</span>)</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [1]  3  7 11 15 19 23 27 31 35 39 43</span></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co"># policy months</span></span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="fu">pol_mth</span>(dates, <span class="st">&quot;2022-05-10&quot;</span>)</span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [1]   8  20  32  44  56  68  80  92 104 116 128</span></span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="co"># policy weeks</span></span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="fu">pol_wk</span>(dates, <span class="st">&quot;2022-05-10&quot;</span>)</span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [1]  34  86 139 191 243 295 347 399 452 504 556</span></span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>dates <span class="ot">&lt;-</span> <span class="fu">ymd</span>(<span class="st">&quot;2022-12-31&quot;</span>) <span class="sc">+</span> <span class="fu">years</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">10</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co"># policy years</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="fu">pol_yr</span>(dates, <span class="st">&quot;2022-05-10&quot;</span>)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [1]  1  2  3  4  5  6  7  8  9 10 11</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co"># policy quarters</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="fu">pol_qtr</span>(dates, <span class="st">&quot;2022-05-10&quot;</span>)</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [1]  3  7 11 15 19 23 27 31 35 39 43</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="co"># policy months</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="fu">pol_mth</span>(dates, <span class="st">&quot;2022-05-10&quot;</span>)</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [1]   8  20  32  44  56  68  80  92 104 116 128</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="co"># policy weeks</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="fu">pol_wk</span>(dates, <span class="st">&quot;2022-05-10&quot;</span>)</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [1]  34  86 139 191 243 295 347 399 452 504 556</span></span></code></pre></div>
 <p>The more general <code>pol_interval()</code> function calculates any
 arbitrary duration. This function has a third argument where the length
 of the policy duration can be specified. This argument must be a period
 object. See <code>lubridate::period()</code> for more information.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co"># days</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">pol_interval</span>(dates, <span class="st">&quot;2022-05-10&quot;</span>, <span class="fu">days</span>(<span class="dv">1</span>))</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [1]  236  601  967 1332 1697 2062 2428 2793 3158 3523 3889</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co"># fortnights</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="fu">pol_interval</span>(dates, <span class="st">&quot;2022-05-10&quot;</span>, <span class="fu">weeks</span>(<span class="dv">2</span>))</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [1]  17  43  70  96 122 148 174 200 226 252 278</span></span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># days</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">pol_interval</span>(dates, <span class="st">&quot;2022-05-10&quot;</span>, <span class="fu">days</span>(<span class="dv">1</span>))</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [1]  236  601  967 1332 1697 2062 2428 2793 3158 3523 3889</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co"># fortnights</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="fu">pol_interval</span>(dates, <span class="st">&quot;2022-05-10&quot;</span>, <span class="fu">weeks</span>(<span class="dv">2</span>))</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [1]  17  43  70  96 122 148 174 200 226 252 278</span></span></code></pre></div>
 </div>
 <div id="predictive-modeling-support-functions" class="section level2">
 <h2>Predictive modeling support functions</h2>
@@ -405,45 +493,44 @@ of the default predictions on the log-odds scale.</p>
 <p>The <code>col_expected</code> argument is used to rename the
 column(s) containing predicted values. If no names are specified, the
 default name is “expected”.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co"># create exposure records</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>exposed_data <span class="ot">&lt;-</span> <span class="fu">expose</span>(census_dat, <span class="at">end_date =</span> <span class="st">&quot;2019-12-31&quot;</span>,</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>                       <span class="at">target_status =</span> <span class="st">&quot;Surrender&quot;</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(pol_yr <span class="sc">&lt;=</span> <span class="dv">10</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># add a response column for surrenders</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">surrendered =</span> status <span class="sc">==</span> <span class="st">&quot;Surrender&quot;</span>)</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co"># create a simple logistic model</span></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">glm</span>(surrendered <span class="sc">~</span> pol_yr, <span class="at">data =</span> exposed_data, </span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>           <span class="at">family =</span> <span class="st">&quot;binomial&quot;</span>, <span class="at">weights =</span> exposure)</span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>exp_res <span class="ot">&lt;-</span> exposed_data <span class="sc">|&gt;</span> </span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>  <span class="co"># attach predictions</span></span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_predictions</span>(mod, <span class="at">type =</span> <span class="st">&quot;response&quot;</span>, <span class="at">col_expected =</span> <span class="st">&quot;logistic&quot;</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>  <span class="co"># summarize results</span></span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(pol_yr) <span class="sc">|&gt;</span> </span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">exp_stats</span>(<span class="at">expected =</span> <span class="st">&quot;logistic&quot;</span>)</span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a> </span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a><span class="co"># create a plot</span></span>
-<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_termination_rates</span>(exp_res)</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create exposure records</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>exposed_data <span class="ot">&lt;-</span> <span class="fu">expose</span>(census_dat, <span class="at">end_date =</span> <span class="st">&quot;2019-12-31&quot;</span>,</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>                       <span class="at">target_status =</span> <span class="st">&quot;Surrender&quot;</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(pol_yr <span class="sc">&lt;=</span> <span class="dv">10</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># add a response column for surrenders</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">surrendered =</span> status <span class="sc">==</span> <span class="st">&quot;Surrender&quot;</span>)</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="co"># create a simple logistic model</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">glm</span>(surrendered <span class="sc">~</span> pol_yr, <span class="at">data =</span> exposed_data, </span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>           <span class="at">family =</span> <span class="st">&quot;binomial&quot;</span>, <span class="at">weights =</span> exposure)</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>exp_res <span class="ot">&lt;-</span> exposed_data <span class="sc">|&gt;</span> </span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>  <span class="co"># attach predictions</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_predictions</span>(mod, <span class="at">type =</span> <span class="st">&quot;response&quot;</span>, <span class="at">col_expected =</span> <span class="st">&quot;logistic&quot;</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>  <span class="co"># summarize results</span></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(pol_yr) <span class="sc">|&gt;</span> </span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">exp_stats</span>(<span class="at">expected =</span> <span class="st">&quot;logistic&quot;</span>)</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a><span class="co"># create a plot</span></span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_termination_rates</span>(exp_res)</span></code></pre></div>
 <p><img src="data:image/png;base64,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" /><!-- --></p>
 <p>In addition, for users of the tidymodels framework, the actxps
 package includes a recipe step function, <code>step_expose()</code>,
 that can apply the <code>expose()</code> function during data
 preprocessing.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(recipes)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">recipe</span>(<span class="sc">~</span> ., <span class="at">data =</span> census_dat) <span class="sc">|&gt;</span> </span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_expose</span>(<span class="at">end_date =</span> <span class="st">&quot;2019-12-31&quot;</span>, <span class="at">target_status =</span> <span class="st">&quot;Surrender&quot;</span>)</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ── Recipe ──────────────────────────────────────────────────────────────────────</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ── Inputs</span></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Number of variables by role</span></span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; predictor: 11</span></span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ── Operations</span></span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; • Exposed data based on policy years for target status Surrender: &lt;none&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(recipes)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">recipe</span>(<span class="sc">~</span> ., <span class="at">data =</span> census_dat) <span class="sc">|&gt;</span> </span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_expose</span>(<span class="at">end_date =</span> <span class="st">&quot;2019-12-31&quot;</span>, <span class="at">target_status =</span> <span class="st">&quot;Surrender&quot;</span>)</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ── Recipe ──────────────────────────────────────────────────────────────────────</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ── Inputs</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Number of variables by role</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; predictor: 11</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ── Operations</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; • Exposed data based on policy years for target status Surrender: &lt;none&gt;</span></span></code></pre></div>
 </div>
 
 
