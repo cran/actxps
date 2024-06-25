@@ -381,14 +381,14 @@ policies</li>
 <li><code>term_date</code>: termination date, if any. Otherwise
 <code>NA</code></li>
 </ul>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(actxps)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>toy_census</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   pol_num    status issue_date  term_date</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1       1    Active 2010-01-01       &lt;NA&gt;</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2       2     Death 2011-05-27 2020-09-14</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3       3 Surrender 2009-11-10 2022-02-25</span></span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(actxps)</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a>toy_census</span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a><span class="co">#&gt;   pol_num    status issue_date  term_date</span></span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a><span class="co">#&gt; 1       1    Active 2010-01-01       &lt;NA&gt;</span></span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a><span class="co">#&gt; 2       2     Death 2011-05-27 2020-09-14</span></span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a><span class="co">#&gt; 3       3 Surrender 2009-11-10 2022-02-25</span></span></code></pre></div>
 </div>
 <div id="policy-year-exposures" class="section level2">
 <h2>Policy year exposures</h2>
@@ -409,12 +409,12 @@ exposure in the 13th year.</li>
 </ul>
 <p>To calculate exposures, we pass our data to the <code>expose()</code>
 function and we specify a study <code>end_date</code>.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>exposed_data <span class="ot">&lt;-</span> <span class="fu">expose</span>(toy_census, <span class="at">end_date =</span> <span class="st">&quot;2022-12-31&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>exposed_data <span class="ot">&lt;-</span> <span class="fu">expose</span>(toy_census, <span class="at">end_date =</span> <span class="st">&quot;2022-12-31&quot;</span>)</span></code></pre></div>
 <p>This creates an <code>exposed_df</code> object, which is a type of
 data frame with some additional attributes related to the experience
 study.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">is_exposed_df</span>(exposed_data)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] TRUE</span></span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="fu">is_exposed_df</span>(exposed_data)</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a><span class="co">#&gt; [1] TRUE</span></span></code></pre></div>
 <p>Let’s examine what happened to each policy.</p>
 <p><strong>Policy 1</strong>: As expected, there are 13 rows for this
 policy. New columns were added for the policy year
@@ -423,30 +423,30 @@ policy. New columns were added for the policy year
 since this policy was active for all 13 years.</p>
 <p>When the data is printed, additional attributes from the
 <code>exposed_df</code> class are displayed.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>exposed_data <span class="sc">|&gt;</span> <span class="fu">filter</span>(pol_num <span class="sc">==</span> <span class="dv">1</span>)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Exposure data</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Exposure type: policy_year </span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Target status:  </span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Study range: 1900-01-01 to 2022-12-31</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 13 × 8</span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    pol_num status issue_date term_date pol_yr pol_date_yr pol_date_yr_end</span></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;      &lt;int&gt; &lt;fct&gt;  &lt;date&gt;     &lt;date&gt;     &lt;int&gt; &lt;date&gt;      &lt;date&gt;         </span></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1       1 Active 2010-01-01 NA             1 2010-01-01  2010-12-31     </span></span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  2       1 Active 2010-01-01 NA             2 2011-01-01  2011-12-31     </span></span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  3       1 Active 2010-01-01 NA             3 2012-01-01  2012-12-31     </span></span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  4       1 Active 2010-01-01 NA             4 2013-01-01  2013-12-31     </span></span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  5       1 Active 2010-01-01 NA             5 2014-01-01  2014-12-31     </span></span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  6       1 Active 2010-01-01 NA             6 2015-01-01  2015-12-31     </span></span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  7       1 Active 2010-01-01 NA             7 2016-01-01  2016-12-31     </span></span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  8       1 Active 2010-01-01 NA             8 2017-01-01  2017-12-31     </span></span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  9       1 Active 2010-01-01 NA             9 2018-01-01  2018-12-31     </span></span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10       1 Active 2010-01-01 NA            10 2019-01-01  2019-12-31     </span></span>
-<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 11       1 Active 2010-01-01 NA            11 2020-01-01  2020-12-31     </span></span>
-<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 12       1 Active 2010-01-01 NA            12 2021-01-01  2021-12-31     </span></span>
-<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 13       1 Active 2010-01-01 NA            13 2022-01-01  2022-12-31     </span></span>
-<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # ℹ 1 more variable: exposure &lt;dbl&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>exposed_data <span class="sc">|&gt;</span> <span class="fu">filter</span>(pol_num <span class="sc">==</span> <span class="dv">1</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a><span class="co">#&gt; Exposure data</span></span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a><span class="co">#&gt;  Exposure type: policy_year </span></span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a><span class="co">#&gt;  Target status:  </span></span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a><span class="co">#&gt;  Study range: 1900-01-01 to 2022-12-31</span></span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a><span class="co">#&gt; # A tibble: 13 × 8</span></span>
+<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a><span class="co">#&gt;    pol_num status issue_date term_date pol_yr pol_date_yr pol_date_yr_end</span></span>
+<span id="cb4-10"><a href="#cb4-10" tabindex="-1"></a><span class="co">#&gt;      &lt;int&gt; &lt;fct&gt;  &lt;date&gt;     &lt;date&gt;     &lt;int&gt; &lt;date&gt;      &lt;date&gt;         </span></span>
+<span id="cb4-11"><a href="#cb4-11" tabindex="-1"></a><span class="co">#&gt;  1       1 Active 2010-01-01 NA             1 2010-01-01  2010-12-31     </span></span>
+<span id="cb4-12"><a href="#cb4-12" tabindex="-1"></a><span class="co">#&gt;  2       1 Active 2010-01-01 NA             2 2011-01-01  2011-12-31     </span></span>
+<span id="cb4-13"><a href="#cb4-13" tabindex="-1"></a><span class="co">#&gt;  3       1 Active 2010-01-01 NA             3 2012-01-01  2012-12-31     </span></span>
+<span id="cb4-14"><a href="#cb4-14" tabindex="-1"></a><span class="co">#&gt;  4       1 Active 2010-01-01 NA             4 2013-01-01  2013-12-31     </span></span>
+<span id="cb4-15"><a href="#cb4-15" tabindex="-1"></a><span class="co">#&gt;  5       1 Active 2010-01-01 NA             5 2014-01-01  2014-12-31     </span></span>
+<span id="cb4-16"><a href="#cb4-16" tabindex="-1"></a><span class="co">#&gt;  6       1 Active 2010-01-01 NA             6 2015-01-01  2015-12-31     </span></span>
+<span id="cb4-17"><a href="#cb4-17" tabindex="-1"></a><span class="co">#&gt;  7       1 Active 2010-01-01 NA             7 2016-01-01  2016-12-31     </span></span>
+<span id="cb4-18"><a href="#cb4-18" tabindex="-1"></a><span class="co">#&gt;  8       1 Active 2010-01-01 NA             8 2017-01-01  2017-12-31     </span></span>
+<span id="cb4-19"><a href="#cb4-19" tabindex="-1"></a><span class="co">#&gt;  9       1 Active 2010-01-01 NA             9 2018-01-01  2018-12-31     </span></span>
+<span id="cb4-20"><a href="#cb4-20" tabindex="-1"></a><span class="co">#&gt; 10       1 Active 2010-01-01 NA            10 2019-01-01  2019-12-31     </span></span>
+<span id="cb4-21"><a href="#cb4-21" tabindex="-1"></a><span class="co">#&gt; 11       1 Active 2010-01-01 NA            11 2020-01-01  2020-12-31     </span></span>
+<span id="cb4-22"><a href="#cb4-22" tabindex="-1"></a><span class="co">#&gt; 12       1 Active 2010-01-01 NA            12 2021-01-01  2021-12-31     </span></span>
+<span id="cb4-23"><a href="#cb4-23" tabindex="-1"></a><span class="co">#&gt; 13       1 Active 2010-01-01 NA            13 2022-01-01  2022-12-31     </span></span>
+<span id="cb4-24"><a href="#cb4-24" tabindex="-1"></a><span class="co">#&gt; # ℹ 1 more variable: exposure &lt;dbl&gt;</span></span></code></pre></div>
 <p><strong>Policy 2</strong>: There are 10 rows for this policy. The
 first 9 periods show the policy in an active <code>status</code> and the
 termination date (<code>term_date</code>) is set to <code>NA</code>. The
@@ -454,27 +454,27 @@ last period includes the final status of “Death” and the actual
 termination date. The last exposure is less than one because roughly a
 third of a year elapsed between the last anniversary date on 2020-05-27
 and the termination date on 2020-09-14.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>exposed_data <span class="sc">|&gt;</span> <span class="fu">filter</span>(pol_num <span class="sc">==</span> <span class="dv">2</span>)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Exposure data</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Exposure type: policy_year </span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Target status:  </span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Study range: 1900-01-01 to 2022-12-31</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 10 × 8</span></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    pol_num status issue_date term_date  pol_yr pol_date_yr pol_date_yr_end</span></span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;      &lt;int&gt; &lt;fct&gt;  &lt;date&gt;     &lt;date&gt;      &lt;int&gt; &lt;date&gt;      &lt;date&gt;         </span></span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1       2 Active 2011-05-27 NA              1 2011-05-27  2012-05-26     </span></span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  2       2 Active 2011-05-27 NA              2 2012-05-27  2013-05-26     </span></span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  3       2 Active 2011-05-27 NA              3 2013-05-27  2014-05-26     </span></span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  4       2 Active 2011-05-27 NA              4 2014-05-27  2015-05-26     </span></span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  5       2 Active 2011-05-27 NA              5 2015-05-27  2016-05-26     </span></span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  6       2 Active 2011-05-27 NA              6 2016-05-27  2017-05-26     </span></span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  7       2 Active 2011-05-27 NA              7 2017-05-27  2018-05-26     </span></span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  8       2 Active 2011-05-27 NA              8 2018-05-27  2019-05-26     </span></span>
-<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  9       2 Active 2011-05-27 NA              9 2019-05-27  2020-05-26     </span></span>
-<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10       2 Death  2011-05-27 2020-09-14     10 2020-05-27  2021-05-26     </span></span>
-<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # ℹ 1 more variable: exposure &lt;dbl&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>exposed_data <span class="sc">|&gt;</span> <span class="fu">filter</span>(pol_num <span class="sc">==</span> <span class="dv">2</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a><span class="co">#&gt; Exposure data</span></span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a><span class="co">#&gt;  Exposure type: policy_year </span></span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a><span class="co">#&gt;  Target status:  </span></span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a><span class="co">#&gt;  Study range: 1900-01-01 to 2022-12-31</span></span>
+<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a><span class="co">#&gt; # A tibble: 10 × 8</span></span>
+<span id="cb5-9"><a href="#cb5-9" tabindex="-1"></a><span class="co">#&gt;    pol_num status issue_date term_date  pol_yr pol_date_yr pol_date_yr_end</span></span>
+<span id="cb5-10"><a href="#cb5-10" tabindex="-1"></a><span class="co">#&gt;      &lt;int&gt; &lt;fct&gt;  &lt;date&gt;     &lt;date&gt;      &lt;int&gt; &lt;date&gt;      &lt;date&gt;         </span></span>
+<span id="cb5-11"><a href="#cb5-11" tabindex="-1"></a><span class="co">#&gt;  1       2 Active 2011-05-27 NA              1 2011-05-27  2012-05-26     </span></span>
+<span id="cb5-12"><a href="#cb5-12" tabindex="-1"></a><span class="co">#&gt;  2       2 Active 2011-05-27 NA              2 2012-05-27  2013-05-26     </span></span>
+<span id="cb5-13"><a href="#cb5-13" tabindex="-1"></a><span class="co">#&gt;  3       2 Active 2011-05-27 NA              3 2013-05-27  2014-05-26     </span></span>
+<span id="cb5-14"><a href="#cb5-14" tabindex="-1"></a><span class="co">#&gt;  4       2 Active 2011-05-27 NA              4 2014-05-27  2015-05-26     </span></span>
+<span id="cb5-15"><a href="#cb5-15" tabindex="-1"></a><span class="co">#&gt;  5       2 Active 2011-05-27 NA              5 2015-05-27  2016-05-26     </span></span>
+<span id="cb5-16"><a href="#cb5-16" tabindex="-1"></a><span class="co">#&gt;  6       2 Active 2011-05-27 NA              6 2016-05-27  2017-05-26     </span></span>
+<span id="cb5-17"><a href="#cb5-17" tabindex="-1"></a><span class="co">#&gt;  7       2 Active 2011-05-27 NA              7 2017-05-27  2018-05-26     </span></span>
+<span id="cb5-18"><a href="#cb5-18" tabindex="-1"></a><span class="co">#&gt;  8       2 Active 2011-05-27 NA              8 2018-05-27  2019-05-26     </span></span>
+<span id="cb5-19"><a href="#cb5-19" tabindex="-1"></a><span class="co">#&gt;  9       2 Active 2011-05-27 NA              9 2019-05-27  2020-05-26     </span></span>
+<span id="cb5-20"><a href="#cb5-20" tabindex="-1"></a><span class="co">#&gt; 10       2 Death  2011-05-27 2020-09-14     10 2020-05-27  2021-05-26     </span></span>
+<span id="cb5-21"><a href="#cb5-21" tabindex="-1"></a><span class="co">#&gt; # ℹ 1 more variable: exposure &lt;dbl&gt;</span></span></code></pre></div>
 <p><strong>Policy 3</strong>: There are 13 rows for this policy. The
 first 12 periods show the policy in an active <code>status</code> and
 the termination date (<code>term_date</code>) is set to <code>NA</code>.
@@ -482,54 +482,53 @@ The last period includes the final status of “Surrender” and the actual
 termination date. The last exposure is less than one because the roughly
 a third of a year elapsed between the last anniversary date on
 2021-11-10 and the termination date on 2022-02-25.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>exposed_data <span class="sc">|&gt;</span> <span class="fu">filter</span>(pol_num <span class="sc">==</span> <span class="dv">3</span>)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Exposure data</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Exposure type: policy_year </span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Target status:  </span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Study range: 1900-01-01 to 2022-12-31</span></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 13 × 8</span></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    pol_num status    issue_date term_date  pol_yr pol_date_yr pol_date_yr_end</span></span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;      &lt;int&gt; &lt;fct&gt;     &lt;date&gt;     &lt;date&gt;      &lt;int&gt; &lt;date&gt;      &lt;date&gt;         </span></span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1       3 Active    2009-11-10 NA              1 2009-11-10  2010-11-09     </span></span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  2       3 Active    2009-11-10 NA              2 2010-11-10  2011-11-09     </span></span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  3       3 Active    2009-11-10 NA              3 2011-11-10  2012-11-09     </span></span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  4       3 Active    2009-11-10 NA              4 2012-11-10  2013-11-09     </span></span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  5       3 Active    2009-11-10 NA              5 2013-11-10  2014-11-09     </span></span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  6       3 Active    2009-11-10 NA              6 2014-11-10  2015-11-09     </span></span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  7       3 Active    2009-11-10 NA              7 2015-11-10  2016-11-09     </span></span>
-<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  8       3 Active    2009-11-10 NA              8 2016-11-10  2017-11-09     </span></span>
-<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  9       3 Active    2009-11-10 NA              9 2017-11-10  2018-11-09     </span></span>
-<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10       3 Active    2009-11-10 NA             10 2018-11-10  2019-11-09     </span></span>
-<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 11       3 Active    2009-11-10 NA             11 2019-11-10  2020-11-09     </span></span>
-<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 12       3 Active    2009-11-10 NA             12 2020-11-10  2021-11-09     </span></span>
-<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 13       3 Surrender 2009-11-10 2022-02-25     13 2021-11-10  2022-11-09     </span></span>
-<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # ℹ 1 more variable: exposure &lt;dbl&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>exposed_data <span class="sc">|&gt;</span> <span class="fu">filter</span>(pol_num <span class="sc">==</span> <span class="dv">3</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a><span class="co">#&gt; Exposure data</span></span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a><span class="co">#&gt;  Exposure type: policy_year </span></span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a><span class="co">#&gt;  Target status:  </span></span>
+<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a><span class="co">#&gt;  Study range: 1900-01-01 to 2022-12-31</span></span>
+<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a><span class="co">#&gt; # A tibble: 13 × 8</span></span>
+<span id="cb6-9"><a href="#cb6-9" tabindex="-1"></a><span class="co">#&gt;    pol_num status    issue_date term_date  pol_yr pol_date_yr pol_date_yr_end</span></span>
+<span id="cb6-10"><a href="#cb6-10" tabindex="-1"></a><span class="co">#&gt;      &lt;int&gt; &lt;fct&gt;     &lt;date&gt;     &lt;date&gt;      &lt;int&gt; &lt;date&gt;      &lt;date&gt;         </span></span>
+<span id="cb6-11"><a href="#cb6-11" tabindex="-1"></a><span class="co">#&gt;  1       3 Active    2009-11-10 NA              1 2009-11-10  2010-11-09     </span></span>
+<span id="cb6-12"><a href="#cb6-12" tabindex="-1"></a><span class="co">#&gt;  2       3 Active    2009-11-10 NA              2 2010-11-10  2011-11-09     </span></span>
+<span id="cb6-13"><a href="#cb6-13" tabindex="-1"></a><span class="co">#&gt;  3       3 Active    2009-11-10 NA              3 2011-11-10  2012-11-09     </span></span>
+<span id="cb6-14"><a href="#cb6-14" tabindex="-1"></a><span class="co">#&gt;  4       3 Active    2009-11-10 NA              4 2012-11-10  2013-11-09     </span></span>
+<span id="cb6-15"><a href="#cb6-15" tabindex="-1"></a><span class="co">#&gt;  5       3 Active    2009-11-10 NA              5 2013-11-10  2014-11-09     </span></span>
+<span id="cb6-16"><a href="#cb6-16" tabindex="-1"></a><span class="co">#&gt;  6       3 Active    2009-11-10 NA              6 2014-11-10  2015-11-09     </span></span>
+<span id="cb6-17"><a href="#cb6-17" tabindex="-1"></a><span class="co">#&gt;  7       3 Active    2009-11-10 NA              7 2015-11-10  2016-11-09     </span></span>
+<span id="cb6-18"><a href="#cb6-18" tabindex="-1"></a><span class="co">#&gt;  8       3 Active    2009-11-10 NA              8 2016-11-10  2017-11-09     </span></span>
+<span id="cb6-19"><a href="#cb6-19" tabindex="-1"></a><span class="co">#&gt;  9       3 Active    2009-11-10 NA              9 2017-11-10  2018-11-09     </span></span>
+<span id="cb6-20"><a href="#cb6-20" tabindex="-1"></a><span class="co">#&gt; 10       3 Active    2009-11-10 NA             10 2018-11-10  2019-11-09     </span></span>
+<span id="cb6-21"><a href="#cb6-21" tabindex="-1"></a><span class="co">#&gt; 11       3 Active    2009-11-10 NA             11 2019-11-10  2020-11-09     </span></span>
+<span id="cb6-22"><a href="#cb6-22" tabindex="-1"></a><span class="co">#&gt; 12       3 Active    2009-11-10 NA             12 2020-11-10  2021-11-09     </span></span>
+<span id="cb6-23"><a href="#cb6-23" tabindex="-1"></a><span class="co">#&gt; 13       3 Surrender 2009-11-10 2022-02-25     13 2021-11-10  2022-11-09     </span></span>
+<span id="cb6-24"><a href="#cb6-24" tabindex="-1"></a><span class="co">#&gt; # ℹ 1 more variable: exposure &lt;dbl&gt;</span></span></code></pre></div>
 <div id="study-start-date" class="section level3">
 <h3>Study start date</h3>
 <p>The previous section only supplied data and a study
-<code>end_date</code> to <code>expose()</code>. These are the minimum
-required arguments for the function. Optionally, a
+<code>end_date</code> to <code>expose()</code>. Optionally, a
 <code>start_date</code> can be supplied that will drop exposure periods
 that begin before a specified date.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">expose</span>(toy_census, <span class="at">end_date =</span> <span class="st">&quot;2022-12-31&quot;</span>, <span class="at">start_date =</span> <span class="st">&quot;2019-12-31&quot;</span>)</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Exposure data</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Exposure type: policy_year </span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Target status:  </span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Study range: 2019-12-31 to 2022-12-31</span></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 6 × 8</span></span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   pol_num status    issue_date term_date  pol_yr pol_date_yr pol_date_yr_end</span></span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     &lt;int&gt; &lt;fct&gt;     &lt;date&gt;     &lt;date&gt;      &lt;int&gt; &lt;date&gt;      &lt;date&gt;         </span></span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1       1 Active    2010-01-01 NA             11 2020-01-01  2020-12-31     </span></span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2       1 Active    2010-01-01 NA             12 2021-01-01  2021-12-31     </span></span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3       1 Active    2010-01-01 NA             13 2022-01-01  2022-12-31     </span></span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4       2 Death     2011-05-27 2020-09-14     10 2020-05-27  2021-05-26     </span></span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5       3 Active    2009-11-10 NA             12 2020-11-10  2021-11-09     </span></span>
-<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6       3 Surrender 2009-11-10 2022-02-25     13 2021-11-10  2022-11-09     </span></span>
-<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # ℹ 1 more variable: exposure &lt;dbl&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="fu">expose</span>(toy_census, <span class="at">end_date =</span> <span class="st">&quot;2022-12-31&quot;</span>, <span class="at">start_date =</span> <span class="st">&quot;2019-12-31&quot;</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a><span class="co">#&gt; Exposure data</span></span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a><span class="co">#&gt;  Exposure type: policy_year </span></span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a><span class="co">#&gt;  Target status:  </span></span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a><span class="co">#&gt;  Study range: 2019-12-31 to 2022-12-31</span></span>
+<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a><span class="co">#&gt; # A tibble: 6 × 8</span></span>
+<span id="cb7-9"><a href="#cb7-9" tabindex="-1"></a><span class="co">#&gt;   pol_num status    issue_date term_date  pol_yr pol_date_yr pol_date_yr_end</span></span>
+<span id="cb7-10"><a href="#cb7-10" tabindex="-1"></a><span class="co">#&gt;     &lt;int&gt; &lt;fct&gt;     &lt;date&gt;     &lt;date&gt;      &lt;int&gt; &lt;date&gt;      &lt;date&gt;         </span></span>
+<span id="cb7-11"><a href="#cb7-11" tabindex="-1"></a><span class="co">#&gt; 1       1 Active    2010-01-01 NA             11 2020-01-01  2020-12-31     </span></span>
+<span id="cb7-12"><a href="#cb7-12" tabindex="-1"></a><span class="co">#&gt; 2       1 Active    2010-01-01 NA             12 2021-01-01  2021-12-31     </span></span>
+<span id="cb7-13"><a href="#cb7-13" tabindex="-1"></a><span class="co">#&gt; 3       1 Active    2010-01-01 NA             13 2022-01-01  2022-12-31     </span></span>
+<span id="cb7-14"><a href="#cb7-14" tabindex="-1"></a><span class="co">#&gt; 4       2 Death     2011-05-27 2020-09-14     10 2020-05-27  2021-05-26     </span></span>
+<span id="cb7-15"><a href="#cb7-15" tabindex="-1"></a><span class="co">#&gt; 5       3 Active    2009-11-10 NA             12 2020-11-10  2021-11-09     </span></span>
+<span id="cb7-16"><a href="#cb7-16" tabindex="-1"></a><span class="co">#&gt; 6       3 Surrender 2009-11-10 2022-02-25     13 2021-11-10  2022-11-09     </span></span>
+<span id="cb7-17"><a href="#cb7-17" tabindex="-1"></a><span class="co">#&gt; # ℹ 1 more variable: exposure &lt;dbl&gt;</span></span></code></pre></div>
 </div>
 <div id="target-status" class="section level3">
 <h3>Target status</h3>
@@ -553,27 +552,27 @@ q^{surr} = \frac{claims}{exposures} = \frac{1}{1} = 100\%
 <p>The annual exposure method can be applied by passing a character
 vector of target statuses to the <code>expose()</code> function.</p>
 <p>Let’s assume we are performing a surrender study.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>exposed_data2 <span class="ot">&lt;-</span> <span class="fu">expose</span>(toy_census, <span class="at">end_date =</span> <span class="st">&quot;2022-12-31&quot;</span>, </span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>                        <span class="at">target =</span> <span class="st">&quot;Surrender&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a>exposed_data2 <span class="ot">&lt;-</span> <span class="fu">expose</span>(toy_census, <span class="at">end_date =</span> <span class="st">&quot;2022-12-31&quot;</span>, </span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a>                        <span class="at">target_status =</span> <span class="st">&quot;Surrender&quot;</span>)</span></code></pre></div>
 <p>Now let’s verify that the exposure on the surrendered policy
 increased to 100% in the last exposure period.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>exposed_data2 <span class="sc">|&gt;</span> </span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(pol_num) <span class="sc">|&gt;</span> </span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_max</span>(pol_yr)</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Exposure data</span></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Exposure type: policy_year </span></span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Target status: Surrender </span></span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Study range: 1900-01-01 to 2022-12-31</span></span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 3 × 8</span></span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # Groups:   pol_num [3]</span></span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   pol_num status    issue_date term_date  pol_yr pol_date_yr pol_date_yr_end</span></span>
-<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     &lt;int&gt; &lt;fct&gt;     &lt;date&gt;     &lt;date&gt;      &lt;int&gt; &lt;date&gt;      &lt;date&gt;         </span></span>
-<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1       1 Active    2010-01-01 NA             13 2022-01-01  2022-12-31     </span></span>
-<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2       2 Death     2011-05-27 2020-09-14     10 2020-05-27  2021-05-26     </span></span>
-<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3       3 Surrender 2009-11-10 2022-02-25     13 2021-11-10  2022-11-09     </span></span>
-<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # ℹ 1 more variable: exposure &lt;dbl&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a>exposed_data2 <span class="sc">|&gt;</span> </span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a>  <span class="fu">group_by</span>(pol_num) <span class="sc">|&gt;</span> </span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a>  <span class="fu">slice_max</span>(pol_yr)</span>
+<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a><span class="co">#&gt; Exposure data</span></span>
+<span id="cb9-5"><a href="#cb9-5" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb9-6"><a href="#cb9-6" tabindex="-1"></a><span class="co">#&gt;  Exposure type: policy_year </span></span>
+<span id="cb9-7"><a href="#cb9-7" tabindex="-1"></a><span class="co">#&gt;  Target status: Surrender </span></span>
+<span id="cb9-8"><a href="#cb9-8" tabindex="-1"></a><span class="co">#&gt;  Study range: 1900-01-01 to 2022-12-31</span></span>
+<span id="cb9-9"><a href="#cb9-9" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb9-10"><a href="#cb9-10" tabindex="-1"></a><span class="co">#&gt; # A tibble: 3 × 8</span></span>
+<span id="cb9-11"><a href="#cb9-11" tabindex="-1"></a><span class="co">#&gt; # Groups:   pol_num [3]</span></span>
+<span id="cb9-12"><a href="#cb9-12" tabindex="-1"></a><span class="co">#&gt;   pol_num status    issue_date term_date  pol_yr pol_date_yr pol_date_yr_end</span></span>
+<span id="cb9-13"><a href="#cb9-13" tabindex="-1"></a><span class="co">#&gt;     &lt;int&gt; &lt;fct&gt;     &lt;date&gt;     &lt;date&gt;      &lt;int&gt; &lt;date&gt;      &lt;date&gt;         </span></span>
+<span id="cb9-14"><a href="#cb9-14" tabindex="-1"></a><span class="co">#&gt; 1       1 Active    2010-01-01 NA             13 2022-01-01  2022-12-31     </span></span>
+<span id="cb9-15"><a href="#cb9-15" tabindex="-1"></a><span class="co">#&gt; 2       2 Death     2011-05-27 2020-09-14     10 2020-05-27  2021-05-26     </span></span>
+<span id="cb9-16"><a href="#cb9-16" tabindex="-1"></a><span class="co">#&gt; 3       3 Surrender 2009-11-10 2022-02-25     13 2021-11-10  2022-11-09     </span></span>
+<span id="cb9-17"><a href="#cb9-17" tabindex="-1"></a><span class="co">#&gt; # ℹ 1 more variable: exposure &lt;dbl&gt;</span></span></code></pre></div>
 </div>
 </div>
 <div id="other-exposure-periods" class="section level2">
@@ -589,29 +588,29 @@ exposures will be calculated.</p>
 left-censored because the policy was issued two-fifths of the way
 through the year, and the last period is right-censored because the
 policy terminated roughly seven-tenths of the way through the year.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>exposed_cal <span class="ot">&lt;-</span> toy_census <span class="sc">|&gt;</span> </span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">expose</span>(<span class="at">end_date =</span> <span class="st">&quot;2022-12-31&quot;</span>, <span class="at">cal_expo =</span> <span class="cn">TRUE</span>, <span class="at">target_status =</span> <span class="st">&quot;Surrender&quot;</span>)</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>exposed_cal <span class="sc">|&gt;</span> <span class="fu">filter</span>(pol_num <span class="sc">==</span> <span class="dv">2</span>)</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Exposure data</span></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Exposure type: calendar_year </span></span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Target status: Surrender </span></span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Study range: 1900-01-01 to 2022-12-31</span></span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 10 × 7</span></span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    pol_num status issue_date term_date  cal_yr     cal_yr_end exposure</span></span>
-<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;      &lt;int&gt; &lt;fct&gt;  &lt;date&gt;     &lt;date&gt;     &lt;date&gt;     &lt;date&gt;        &lt;dbl&gt;</span></span>
-<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1       2 Active 2011-05-27 NA         2011-01-01 2011-12-31    0.6  </span></span>
-<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  2       2 Active 2011-05-27 NA         2012-01-01 2012-12-31    1    </span></span>
-<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  3       2 Active 2011-05-27 NA         2013-01-01 2013-12-31    1    </span></span>
-<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  4       2 Active 2011-05-27 NA         2014-01-01 2014-12-31    1    </span></span>
-<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  5       2 Active 2011-05-27 NA         2015-01-01 2015-12-31    1    </span></span>
-<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  6       2 Active 2011-05-27 NA         2016-01-01 2016-12-31    1    </span></span>
-<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  7       2 Active 2011-05-27 NA         2017-01-01 2017-12-31    1    </span></span>
-<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  8       2 Active 2011-05-27 NA         2018-01-01 2018-12-31    1    </span></span>
-<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  9       2 Active 2011-05-27 NA         2019-01-01 2019-12-31    1    </span></span>
-<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10       2 Death  2011-05-27 2020-09-14 2020-01-01 2020-12-31    0.705</span></span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a>exposed_cal <span class="ot">&lt;-</span> toy_census <span class="sc">|&gt;</span> </span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a>  <span class="fu">expose</span>(<span class="at">end_date =</span> <span class="st">&quot;2022-12-31&quot;</span>, <span class="at">cal_expo =</span> <span class="cn">TRUE</span>, <span class="at">target_status =</span> <span class="st">&quot;Surrender&quot;</span>)</span>
+<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a>exposed_cal <span class="sc">|&gt;</span> <span class="fu">filter</span>(pol_num <span class="sc">==</span> <span class="dv">2</span>)</span>
+<span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a><span class="co">#&gt; Exposure data</span></span>
+<span id="cb10-6"><a href="#cb10-6" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb10-7"><a href="#cb10-7" tabindex="-1"></a><span class="co">#&gt;  Exposure type: calendar_year </span></span>
+<span id="cb10-8"><a href="#cb10-8" tabindex="-1"></a><span class="co">#&gt;  Target status: Surrender </span></span>
+<span id="cb10-9"><a href="#cb10-9" tabindex="-1"></a><span class="co">#&gt;  Study range: 1900-01-01 to 2022-12-31</span></span>
+<span id="cb10-10"><a href="#cb10-10" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb10-11"><a href="#cb10-11" tabindex="-1"></a><span class="co">#&gt; # A tibble: 10 × 7</span></span>
+<span id="cb10-12"><a href="#cb10-12" tabindex="-1"></a><span class="co">#&gt;    pol_num status issue_date term_date  cal_yr     cal_yr_end exposure</span></span>
+<span id="cb10-13"><a href="#cb10-13" tabindex="-1"></a><span class="co">#&gt;      &lt;int&gt; &lt;fct&gt;  &lt;date&gt;     &lt;date&gt;     &lt;date&gt;     &lt;date&gt;        &lt;dbl&gt;</span></span>
+<span id="cb10-14"><a href="#cb10-14" tabindex="-1"></a><span class="co">#&gt;  1       2 Active 2011-05-27 NA         2011-01-01 2011-12-31    0.6  </span></span>
+<span id="cb10-15"><a href="#cb10-15" tabindex="-1"></a><span class="co">#&gt;  2       2 Active 2011-05-27 NA         2012-01-01 2012-12-31    1    </span></span>
+<span id="cb10-16"><a href="#cb10-16" tabindex="-1"></a><span class="co">#&gt;  3       2 Active 2011-05-27 NA         2013-01-01 2013-12-31    1    </span></span>
+<span id="cb10-17"><a href="#cb10-17" tabindex="-1"></a><span class="co">#&gt;  4       2 Active 2011-05-27 NA         2014-01-01 2014-12-31    1    </span></span>
+<span id="cb10-18"><a href="#cb10-18" tabindex="-1"></a><span class="co">#&gt;  5       2 Active 2011-05-27 NA         2015-01-01 2015-12-31    1    </span></span>
+<span id="cb10-19"><a href="#cb10-19" tabindex="-1"></a><span class="co">#&gt;  6       2 Active 2011-05-27 NA         2016-01-01 2016-12-31    1    </span></span>
+<span id="cb10-20"><a href="#cb10-20" tabindex="-1"></a><span class="co">#&gt;  7       2 Active 2011-05-27 NA         2017-01-01 2017-12-31    1    </span></span>
+<span id="cb10-21"><a href="#cb10-21" tabindex="-1"></a><span class="co">#&gt;  8       2 Active 2011-05-27 NA         2018-01-01 2018-12-31    1    </span></span>
+<span id="cb10-22"><a href="#cb10-22" tabindex="-1"></a><span class="co">#&gt;  9       2 Active 2011-05-27 NA         2019-01-01 2019-12-31    1    </span></span>
+<span id="cb10-23"><a href="#cb10-23" tabindex="-1"></a><span class="co">#&gt; 10       2 Death  2011-05-27 2020-09-14 2020-01-01 2020-12-31    0.705</span></span></code></pre></div>
 </div>
 <div id="quarters-months-and-weeks" class="section level3">
 <h3>Quarters, months, and weeks</h3>
@@ -619,32 +618,32 @@ policy terminated roughly seven-tenths of the way through the year.</p>
 <code>&quot;quarter&quot;</code>, <code>&quot;month&quot;</code>, or <code>&quot;week&quot;</code> to
 the <code>expo_length</code> argument. This can be used with policy or
 calendar-based exposures.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>toy_census <span class="sc">|&gt;</span> </span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">expose</span>(<span class="at">end_date =</span> <span class="st">&quot;2022-12-31&quot;</span>, </span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">cal_expo =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">expo_length =</span> <span class="st">&quot;quarter&quot;</span>, </span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">target_status =</span> <span class="st">&quot;Surrender&quot;</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(pol_num <span class="sc">==</span> <span class="dv">2</span>)</span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Exposure data</span></span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Exposure type: calendar_quarter </span></span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Target status: Surrender </span></span>
-<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Study range: 1900-01-01 to 2022-12-31</span></span>
-<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 38 × 7</span></span>
-<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    pol_num status issue_date term_date cal_qtr    cal_qtr_end exposure</span></span>
-<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;      &lt;int&gt; &lt;fct&gt;  &lt;date&gt;     &lt;date&gt;    &lt;date&gt;     &lt;date&gt;         &lt;dbl&gt;</span></span>
-<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1       2 Active 2011-05-27 NA        2011-04-01 2011-06-30     0.385</span></span>
-<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  2       2 Active 2011-05-27 NA        2011-07-01 2011-09-30     1    </span></span>
-<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  3       2 Active 2011-05-27 NA        2011-10-01 2011-12-31     1    </span></span>
-<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  4       2 Active 2011-05-27 NA        2012-01-01 2012-03-31     1    </span></span>
-<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  5       2 Active 2011-05-27 NA        2012-04-01 2012-06-30     1    </span></span>
-<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  6       2 Active 2011-05-27 NA        2012-07-01 2012-09-30     1    </span></span>
-<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  7       2 Active 2011-05-27 NA        2012-10-01 2012-12-31     1    </span></span>
-<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  8       2 Active 2011-05-27 NA        2013-01-01 2013-03-31     1    </span></span>
-<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  9       2 Active 2011-05-27 NA        2013-04-01 2013-06-30     1    </span></span>
-<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10       2 Active 2011-05-27 NA        2013-07-01 2013-09-30     1    </span></span>
-<span id="cb11-26"><a href="#cb11-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # ℹ 28 more rows</span></span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a>toy_census <span class="sc">|&gt;</span> </span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a>  <span class="fu">expose</span>(<span class="at">end_date =</span> <span class="st">&quot;2022-12-31&quot;</span>, </span>
+<span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a>         <span class="at">cal_expo =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a>         <span class="at">expo_length =</span> <span class="st">&quot;quarter&quot;</span>, </span>
+<span id="cb11-5"><a href="#cb11-5" tabindex="-1"></a>         <span class="at">target_status =</span> <span class="st">&quot;Surrender&quot;</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb11-6"><a href="#cb11-6" tabindex="-1"></a>  <span class="fu">filter</span>(pol_num <span class="sc">==</span> <span class="dv">2</span>)</span>
+<span id="cb11-7"><a href="#cb11-7" tabindex="-1"></a><span class="co">#&gt; Exposure data</span></span>
+<span id="cb11-8"><a href="#cb11-8" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb11-9"><a href="#cb11-9" tabindex="-1"></a><span class="co">#&gt;  Exposure type: calendar_quarter </span></span>
+<span id="cb11-10"><a href="#cb11-10" tabindex="-1"></a><span class="co">#&gt;  Target status: Surrender </span></span>
+<span id="cb11-11"><a href="#cb11-11" tabindex="-1"></a><span class="co">#&gt;  Study range: 1900-01-01 to 2022-12-31</span></span>
+<span id="cb11-12"><a href="#cb11-12" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb11-13"><a href="#cb11-13" tabindex="-1"></a><span class="co">#&gt; # A tibble: 38 × 7</span></span>
+<span id="cb11-14"><a href="#cb11-14" tabindex="-1"></a><span class="co">#&gt;    pol_num status issue_date term_date cal_qtr    cal_qtr_end exposure</span></span>
+<span id="cb11-15"><a href="#cb11-15" tabindex="-1"></a><span class="co">#&gt;      &lt;int&gt; &lt;fct&gt;  &lt;date&gt;     &lt;date&gt;    &lt;date&gt;     &lt;date&gt;         &lt;dbl&gt;</span></span>
+<span id="cb11-16"><a href="#cb11-16" tabindex="-1"></a><span class="co">#&gt;  1       2 Active 2011-05-27 NA        2011-04-01 2011-06-30     0.385</span></span>
+<span id="cb11-17"><a href="#cb11-17" tabindex="-1"></a><span class="co">#&gt;  2       2 Active 2011-05-27 NA        2011-07-01 2011-09-30     1    </span></span>
+<span id="cb11-18"><a href="#cb11-18" tabindex="-1"></a><span class="co">#&gt;  3       2 Active 2011-05-27 NA        2011-10-01 2011-12-31     1    </span></span>
+<span id="cb11-19"><a href="#cb11-19" tabindex="-1"></a><span class="co">#&gt;  4       2 Active 2011-05-27 NA        2012-01-01 2012-03-31     1    </span></span>
+<span id="cb11-20"><a href="#cb11-20" tabindex="-1"></a><span class="co">#&gt;  5       2 Active 2011-05-27 NA        2012-04-01 2012-06-30     1    </span></span>
+<span id="cb11-21"><a href="#cb11-21" tabindex="-1"></a><span class="co">#&gt;  6       2 Active 2011-05-27 NA        2012-07-01 2012-09-30     1    </span></span>
+<span id="cb11-22"><a href="#cb11-22" tabindex="-1"></a><span class="co">#&gt;  7       2 Active 2011-05-27 NA        2012-10-01 2012-12-31     1    </span></span>
+<span id="cb11-23"><a href="#cb11-23" tabindex="-1"></a><span class="co">#&gt;  8       2 Active 2011-05-27 NA        2013-01-01 2013-03-31     1    </span></span>
+<span id="cb11-24"><a href="#cb11-24" tabindex="-1"></a><span class="co">#&gt;  9       2 Active 2011-05-27 NA        2013-04-01 2013-06-30     1    </span></span>
+<span id="cb11-25"><a href="#cb11-25" tabindex="-1"></a><span class="co">#&gt; 10       2 Active 2011-05-27 NA        2013-07-01 2013-09-30     1    </span></span>
+<span id="cb11-26"><a href="#cb11-26" tabindex="-1"></a><span class="co">#&gt; # ℹ 28 more rows</span></span></code></pre></div>
 </div>
 <div id="convenience-functions" class="section level3">
 <h3>Convenience functions</h3>
@@ -676,38 +675,38 @@ records instead of 10. There is one record for 2011 and 2 records for
 all other years. The year 2011 only has a single record because the
 policy was issued in this year, so there can only be a post-anniversary
 record.</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>split <span class="ot">&lt;-</span> <span class="fu">expose_split</span>(exposed_cal)</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>split <span class="sc">|&gt;</span> <span class="fu">filter</span>(pol_num <span class="sc">==</span> <span class="dv">2</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(cal_yr, cal_yr_end, pol_yr, exposure_pol, exposure_cal)</span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Exposure data</span></span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Exposure type: split_year </span></span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Target status: Surrender </span></span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Study range: 1900-01-01 to 2022-12-31</span></span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 19 × 5</span></span>
-<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    cal_yr     cal_yr_end pol_yr exposure_pol exposure_cal</span></span>
-<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    &lt;date&gt;     &lt;date&gt;      &lt;dbl&gt;        &lt;dbl&gt;        &lt;dbl&gt;</span></span>
-<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1 2011-05-27 2011-12-31      1        0.598        0.6  </span></span>
-<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  2 2012-01-01 2012-05-26      1        0.402        0.402</span></span>
-<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  3 2012-05-27 2012-12-31      2        0.6          0.598</span></span>
-<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  4 2013-01-01 2013-05-26      2        0.4          0.4  </span></span>
-<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  5 2013-05-27 2013-12-31      3        0.6          0.6  </span></span>
-<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  6 2014-01-01 2014-05-26      3        0.4          0.4  </span></span>
-<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  7 2014-05-27 2014-12-31      4        0.6          0.6  </span></span>
-<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  8 2015-01-01 2015-05-26      4        0.4          0.4  </span></span>
-<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  9 2015-05-27 2015-12-31      5        0.598        0.6  </span></span>
-<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10 2016-01-01 2016-05-26      5        0.402        0.402</span></span>
-<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 11 2016-05-27 2016-12-31      6        0.6          0.598</span></span>
-<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 12 2017-01-01 2017-05-26      6        0.4          0.4  </span></span>
-<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 13 2017-05-27 2017-12-31      7        0.6          0.6  </span></span>
-<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 14 2018-01-01 2018-05-26      7        0.4          0.4  </span></span>
-<span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 15 2018-05-27 2018-12-31      8        0.6          0.6  </span></span>
-<span id="cb12-29"><a href="#cb12-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 16 2019-01-01 2019-05-26      8        0.4          0.4  </span></span>
-<span id="cb12-30"><a href="#cb12-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 17 2019-05-27 2019-12-31      9        0.598        0.6  </span></span>
-<span id="cb12-31"><a href="#cb12-31" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 18 2020-01-01 2020-05-26      9        0.402        0.402</span></span>
-<span id="cb12-32"><a href="#cb12-32" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 19 2020-05-27 2020-12-31     10        0.304        0.303</span></span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a>split <span class="ot">&lt;-</span> <span class="fu">expose_split</span>(exposed_cal)</span>
+<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a></span>
+<span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a>split <span class="sc">|&gt;</span> <span class="fu">filter</span>(pol_num <span class="sc">==</span> <span class="dv">2</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb12-4"><a href="#cb12-4" tabindex="-1"></a>  <span class="fu">select</span>(cal_yr, cal_yr_end, pol_yr, exposure_pol, exposure_cal)</span>
+<span id="cb12-5"><a href="#cb12-5" tabindex="-1"></a><span class="co">#&gt; Exposure data</span></span>
+<span id="cb12-6"><a href="#cb12-6" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb12-7"><a href="#cb12-7" tabindex="-1"></a><span class="co">#&gt;  Exposure type: split_year </span></span>
+<span id="cb12-8"><a href="#cb12-8" tabindex="-1"></a><span class="co">#&gt;  Target status: Surrender </span></span>
+<span id="cb12-9"><a href="#cb12-9" tabindex="-1"></a><span class="co">#&gt;  Study range: 1900-01-01 to 2022-12-31</span></span>
+<span id="cb12-10"><a href="#cb12-10" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb12-11"><a href="#cb12-11" tabindex="-1"></a><span class="co">#&gt; # A tibble: 19 × 5</span></span>
+<span id="cb12-12"><a href="#cb12-12" tabindex="-1"></a><span class="co">#&gt;    cal_yr     cal_yr_end pol_yr exposure_pol exposure_cal</span></span>
+<span id="cb12-13"><a href="#cb12-13" tabindex="-1"></a><span class="co">#&gt;    &lt;date&gt;     &lt;date&gt;      &lt;int&gt;        &lt;dbl&gt;        &lt;dbl&gt;</span></span>
+<span id="cb12-14"><a href="#cb12-14" tabindex="-1"></a><span class="co">#&gt;  1 2011-05-27 2011-12-31      1        0.598        0.6  </span></span>
+<span id="cb12-15"><a href="#cb12-15" tabindex="-1"></a><span class="co">#&gt;  2 2012-01-01 2012-05-26      1        0.402        0.402</span></span>
+<span id="cb12-16"><a href="#cb12-16" tabindex="-1"></a><span class="co">#&gt;  3 2012-05-27 2012-12-31      2        0.6          0.598</span></span>
+<span id="cb12-17"><a href="#cb12-17" tabindex="-1"></a><span class="co">#&gt;  4 2013-01-01 2013-05-26      2        0.4          0.4  </span></span>
+<span id="cb12-18"><a href="#cb12-18" tabindex="-1"></a><span class="co">#&gt;  5 2013-05-27 2013-12-31      3        0.6          0.6  </span></span>
+<span id="cb12-19"><a href="#cb12-19" tabindex="-1"></a><span class="co">#&gt;  6 2014-01-01 2014-05-26      3        0.4          0.4  </span></span>
+<span id="cb12-20"><a href="#cb12-20" tabindex="-1"></a><span class="co">#&gt;  7 2014-05-27 2014-12-31      4        0.6          0.6  </span></span>
+<span id="cb12-21"><a href="#cb12-21" tabindex="-1"></a><span class="co">#&gt;  8 2015-01-01 2015-05-26      4        0.4          0.4  </span></span>
+<span id="cb12-22"><a href="#cb12-22" tabindex="-1"></a><span class="co">#&gt;  9 2015-05-27 2015-12-31      5        0.598        0.6  </span></span>
+<span id="cb12-23"><a href="#cb12-23" tabindex="-1"></a><span class="co">#&gt; 10 2016-01-01 2016-05-26      5        0.402        0.402</span></span>
+<span id="cb12-24"><a href="#cb12-24" tabindex="-1"></a><span class="co">#&gt; 11 2016-05-27 2016-12-31      6        0.6          0.598</span></span>
+<span id="cb12-25"><a href="#cb12-25" tabindex="-1"></a><span class="co">#&gt; 12 2017-01-01 2017-05-26      6        0.4          0.4  </span></span>
+<span id="cb12-26"><a href="#cb12-26" tabindex="-1"></a><span class="co">#&gt; 13 2017-05-27 2017-12-31      7        0.6          0.6  </span></span>
+<span id="cb12-27"><a href="#cb12-27" tabindex="-1"></a><span class="co">#&gt; 14 2018-01-01 2018-05-26      7        0.4          0.4  </span></span>
+<span id="cb12-28"><a href="#cb12-28" tabindex="-1"></a><span class="co">#&gt; 15 2018-05-27 2018-12-31      8        0.6          0.6  </span></span>
+<span id="cb12-29"><a href="#cb12-29" tabindex="-1"></a><span class="co">#&gt; 16 2019-01-01 2019-05-26      8        0.4          0.4  </span></span>
+<span id="cb12-30"><a href="#cb12-30" tabindex="-1"></a><span class="co">#&gt; 17 2019-05-27 2019-12-31      9        0.598        0.6  </span></span>
+<span id="cb12-31"><a href="#cb12-31" tabindex="-1"></a><span class="co">#&gt; 18 2020-01-01 2020-05-26      9        0.402        0.402</span></span>
+<span id="cb12-32"><a href="#cb12-32" tabindex="-1"></a><span class="co">#&gt; 19 2020-05-27 2020-12-31     10        0.304        0.303</span></span></code></pre></div>
 <p>The output of <code>expose_split()</code> contains two exposure
 columns.</p>
 <ul>
@@ -738,49 +737,49 @@ basis.</p></li>
 <code>exposed_df</code> objects to have a single column for exposures.
 For split exposures, the exposure basis must be specified using the
 <code>col_exposure</code> argument.</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">exp_stats</span>(split)</span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="fu">exp_stats</span>(split)</span></code></pre></div>
 <pre><code>#&gt; ✖ A `split_exposed_df` was passed without clarifying which exposure basis should be used to summarize results.
 #&gt; ℹ Pass &quot;exposure_pol&quot; to `col_exposure` for policy year exposures.
 #&gt; ℹ Pass &quot;exposure_cal&quot; to `col_exposure` for calendar exposures.</code></pre>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">exp_stats</span>(split, <span class="at">col_exposure =</span> <span class="st">&quot;exposure_pol&quot;</span>)</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Experience study results</span></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Target status: Surrender </span></span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Study range: 1900-01-01 to 2022-12-31 </span></span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 1 × 4</span></span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   n_claims claims exposure  q_obs</span></span>
-<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;      &lt;int&gt;  &lt;int&gt;    &lt;dbl&gt;  &lt;dbl&gt;</span></span>
-<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1        1      1     35.3 0.0283</span></span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a><span class="fu">exp_stats</span>(split, <span class="at">col_exposure =</span> <span class="st">&quot;exposure_pol&quot;</span>)</span>
+<span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a><span class="co">#&gt; Experience study results</span></span>
+<span id="cb15-3"><a href="#cb15-3" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb15-4"><a href="#cb15-4" tabindex="-1"></a><span class="co">#&gt;  Target status: Surrender </span></span>
+<span id="cb15-5"><a href="#cb15-5" tabindex="-1"></a><span class="co">#&gt;  Study range: 1900-01-01 to 2022-12-31 </span></span>
+<span id="cb15-6"><a href="#cb15-6" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb15-7"><a href="#cb15-7" tabindex="-1"></a><span class="co">#&gt; # A tibble: 1 × 4</span></span>
+<span id="cb15-8"><a href="#cb15-8" tabindex="-1"></a><span class="co">#&gt;   n_claims claims exposure  q_obs</span></span>
+<span id="cb15-9"><a href="#cb15-9" tabindex="-1"></a><span class="co">#&gt;      &lt;int&gt;  &lt;int&gt;    &lt;dbl&gt;  &lt;dbl&gt;</span></span>
+<span id="cb15-10"><a href="#cb15-10" tabindex="-1"></a><span class="co">#&gt; 1        1      1     35.3 0.0283</span></span></code></pre></div>
 <p><code>expose_split()</code> doesn’t just work with calendar year
 exposures. Calendar quarters, months, or weeks can also be split. For
 periods shorter than a year, a record is only split into pre- and
 post-anniversary segments if a policy anniversary appears in the middle
 of the period.</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">expose_cq</span>(toy_census, <span class="st">&quot;2022-12-31&quot;</span>, <span class="at">target_status =</span> <span class="st">&quot;Surrender&quot;</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">expose_split</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(pol_num <span class="sc">==</span> <span class="dv">2</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(cal_qtr, cal_qtr_end, pol_yr, exposure_pol, exposure_cal)</span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Exposure data</span></span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Exposure type: split_quarter </span></span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Target status: Surrender </span></span>
-<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Study range: 1900-01-01 to 2022-12-31</span></span>
-<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 47 × 5</span></span>
-<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    cal_qtr    cal_qtr_end pol_yr exposure_pol exposure_cal</span></span>
-<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    &lt;date&gt;     &lt;date&gt;       &lt;dbl&gt;        &lt;dbl&gt;        &lt;dbl&gt;</span></span>
-<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1 2011-05-27 2011-06-30       1       0.0956        0.385</span></span>
-<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  2 2011-07-01 2011-09-30       1       0.251         1    </span></span>
-<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  3 2011-10-01 2011-12-31       1       0.251         1    </span></span>
-<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  4 2012-01-01 2012-03-31       1       0.249         1    </span></span>
-<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  5 2012-04-01 2012-05-26       1       0.153         0.615</span></span>
-<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  6 2012-05-27 2012-06-30       2       0.0959        0.385</span></span>
-<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  7 2012-07-01 2012-09-30       2       0.252         1    </span></span>
-<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  8 2012-10-01 2012-12-31       2       0.252         1    </span></span>
-<span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  9 2013-01-01 2013-03-31       2       0.247         1    </span></span>
-<span id="cb16-23"><a href="#cb16-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10 2013-04-01 2013-05-26       2       0.153         0.615</span></span>
-<span id="cb16-24"><a href="#cb16-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # ℹ 37 more rows</span></span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a><span class="fu">expose_cq</span>(toy_census, <span class="st">&quot;2022-12-31&quot;</span>, <span class="at">target_status =</span> <span class="st">&quot;Surrender&quot;</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb16-2"><a href="#cb16-2" tabindex="-1"></a>  <span class="fu">expose_split</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb16-3"><a href="#cb16-3" tabindex="-1"></a>  <span class="fu">filter</span>(pol_num <span class="sc">==</span> <span class="dv">2</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb16-4"><a href="#cb16-4" tabindex="-1"></a>  <span class="fu">select</span>(cal_qtr, cal_qtr_end, pol_yr, exposure_pol, exposure_cal)</span>
+<span id="cb16-5"><a href="#cb16-5" tabindex="-1"></a><span class="co">#&gt; Exposure data</span></span>
+<span id="cb16-6"><a href="#cb16-6" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb16-7"><a href="#cb16-7" tabindex="-1"></a><span class="co">#&gt;  Exposure type: split_quarter </span></span>
+<span id="cb16-8"><a href="#cb16-8" tabindex="-1"></a><span class="co">#&gt;  Target status: Surrender </span></span>
+<span id="cb16-9"><a href="#cb16-9" tabindex="-1"></a><span class="co">#&gt;  Study range: 1900-01-01 to 2022-12-31</span></span>
+<span id="cb16-10"><a href="#cb16-10" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb16-11"><a href="#cb16-11" tabindex="-1"></a><span class="co">#&gt; # A tibble: 47 × 5</span></span>
+<span id="cb16-12"><a href="#cb16-12" tabindex="-1"></a><span class="co">#&gt;    cal_qtr    cal_qtr_end pol_yr exposure_pol exposure_cal</span></span>
+<span id="cb16-13"><a href="#cb16-13" tabindex="-1"></a><span class="co">#&gt;    &lt;date&gt;     &lt;date&gt;       &lt;int&gt;        &lt;dbl&gt;        &lt;dbl&gt;</span></span>
+<span id="cb16-14"><a href="#cb16-14" tabindex="-1"></a><span class="co">#&gt;  1 2011-05-27 2011-06-30       1       0.0956        0.385</span></span>
+<span id="cb16-15"><a href="#cb16-15" tabindex="-1"></a><span class="co">#&gt;  2 2011-07-01 2011-09-30       1       0.251         1    </span></span>
+<span id="cb16-16"><a href="#cb16-16" tabindex="-1"></a><span class="co">#&gt;  3 2011-10-01 2011-12-31       1       0.251         1    </span></span>
+<span id="cb16-17"><a href="#cb16-17" tabindex="-1"></a><span class="co">#&gt;  4 2012-01-01 2012-03-31       1       0.249         1    </span></span>
+<span id="cb16-18"><a href="#cb16-18" tabindex="-1"></a><span class="co">#&gt;  5 2012-04-01 2012-05-26       1       0.153         0.615</span></span>
+<span id="cb16-19"><a href="#cb16-19" tabindex="-1"></a><span class="co">#&gt;  6 2012-05-27 2012-06-30       2       0.0959        0.385</span></span>
+<span id="cb16-20"><a href="#cb16-20" tabindex="-1"></a><span class="co">#&gt;  7 2012-07-01 2012-09-30       2       0.252         1    </span></span>
+<span id="cb16-21"><a href="#cb16-21" tabindex="-1"></a><span class="co">#&gt;  8 2012-10-01 2012-12-31       2       0.252         1    </span></span>
+<span id="cb16-22"><a href="#cb16-22" tabindex="-1"></a><span class="co">#&gt;  9 2013-01-01 2013-03-31       2       0.247         1    </span></span>
+<span id="cb16-23"><a href="#cb16-23" tabindex="-1"></a><span class="co">#&gt; 10 2013-04-01 2013-05-26       2       0.153         0.615</span></span>
+<span id="cb16-24"><a href="#cb16-24" tabindex="-1"></a><span class="co">#&gt; # ℹ 37 more rows</span></span></code></pre></div>
 <p>Note, however, that calendar period exposures will always be
 expressed in the original units and policy exposures will always be
 expressed in years. Above, calendar exposures are quarters whereas
@@ -792,56 +791,56 @@ policy exposures are years.</p>
 a function called <code>step_expose()</code> that is compatible with the
 recipes package from tidymodels. This function applies the
 <code>expose()</code> function within a recipe.</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(recipes)</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Warning: package &#39;recipes&#39; was built under R version 4.2.3</span></span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Attaching package: &#39;recipes&#39;</span></span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; The following object is masked from &#39;package:stats&#39;:</span></span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     step</span></span>
-<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>expo_rec <span class="ot">&lt;-</span> <span class="fu">recipe</span>(status <span class="sc">~</span> ., toy_census) <span class="sc">|&gt;</span></span>
-<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_expose</span>(<span class="at">end_date =</span> <span class="st">&quot;2022-12-31&quot;</span>, <span class="at">target_status =</span> <span class="st">&quot;Surrender&quot;</span>,</span>
-<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>              <span class="at">options =</span> <span class="fu">list</span>(<span class="at">expo_length =</span> <span class="st">&quot;month&quot;</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">prep</span>()</span>
-<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>expo_rec</span>
-<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ── Recipe ──────────────────────────────────────────────────────────────────────</span></span>
-<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ── Inputs</span></span>
-<span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Number of variables by role</span></span>
-<span id="cb17-20"><a href="#cb17-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; outcome:   1</span></span>
-<span id="cb17-21"><a href="#cb17-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; predictor: 3</span></span>
-<span id="cb17-22"><a href="#cb17-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb17-23"><a href="#cb17-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ── Training information</span></span>
-<span id="cb17-24"><a href="#cb17-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Training data contained 3 data points and 1 incomplete row.</span></span>
-<span id="cb17-25"><a href="#cb17-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb17-26"><a href="#cb17-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ── Operations</span></span>
-<span id="cb17-27"><a href="#cb17-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; • Exposed data based on policy months for target status Surrender: &lt;none&gt; |</span></span>
-<span id="cb17-28"><a href="#cb17-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Trained</span></span>
-<span id="cb17-29"><a href="#cb17-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-30"><a href="#cb17-30" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(expo_rec, <span class="at">number =</span> <span class="dv">1</span>)</span>
-<span id="cb17-31"><a href="#cb17-31" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 1 × 4</span></span>
-<span id="cb17-32"><a href="#cb17-32" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   exposure_type target_status start_date end_date  </span></span>
-<span id="cb17-33"><a href="#cb17-33" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;         &lt;chr&gt;         &lt;date&gt;     &lt;chr&gt;     </span></span>
-<span id="cb17-34"><a href="#cb17-34" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 policy_month  Surrender     1900-01-01 2022-12-31</span></span>
-<span id="cb17-35"><a href="#cb17-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-36"><a href="#cb17-36" aria-hidden="true" tabindex="-1"></a><span class="fu">bake</span>(expo_rec, <span class="at">new_data =</span> <span class="cn">NULL</span>)</span>
-<span id="cb17-37"><a href="#cb17-37" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 416 × 7</span></span>
-<span id="cb17-38"><a href="#cb17-38" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    issue_date term_date status pol_mth pol_date_mth pol_date_mth_end exposure</span></span>
-<span id="cb17-39"><a href="#cb17-39" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    &lt;date&gt;     &lt;date&gt;    &lt;fct&gt;    &lt;int&gt; &lt;date&gt;       &lt;date&gt;              &lt;dbl&gt;</span></span>
-<span id="cb17-40"><a href="#cb17-40" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1 2010-01-01 NA        Active       1 2010-01-01   2010-01-31              1</span></span>
-<span id="cb17-41"><a href="#cb17-41" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  2 2010-01-01 NA        Active       2 2010-02-01   2010-02-28              1</span></span>
-<span id="cb17-42"><a href="#cb17-42" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  3 2010-01-01 NA        Active       3 2010-03-01   2010-03-31              1</span></span>
-<span id="cb17-43"><a href="#cb17-43" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  4 2010-01-01 NA        Active       4 2010-04-01   2010-04-30              1</span></span>
-<span id="cb17-44"><a href="#cb17-44" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  5 2010-01-01 NA        Active       5 2010-05-01   2010-05-31              1</span></span>
-<span id="cb17-45"><a href="#cb17-45" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  6 2010-01-01 NA        Active       6 2010-06-01   2010-06-30              1</span></span>
-<span id="cb17-46"><a href="#cb17-46" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  7 2010-01-01 NA        Active       7 2010-07-01   2010-07-31              1</span></span>
-<span id="cb17-47"><a href="#cb17-47" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  8 2010-01-01 NA        Active       8 2010-08-01   2010-08-31              1</span></span>
-<span id="cb17-48"><a href="#cb17-48" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  9 2010-01-01 NA        Active       9 2010-09-01   2010-09-30              1</span></span>
-<span id="cb17-49"><a href="#cb17-49" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10 2010-01-01 NA        Active      10 2010-10-01   2010-10-31              1</span></span>
-<span id="cb17-50"><a href="#cb17-50" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # ℹ 406 more rows</span></span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a><span class="fu">library</span>(recipes)</span>
+<span id="cb17-2"><a href="#cb17-2" tabindex="-1"></a><span class="co">#&gt; Warning: package &#39;recipes&#39; was built under R version 4.2.3</span></span>
+<span id="cb17-3"><a href="#cb17-3" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb17-4"><a href="#cb17-4" tabindex="-1"></a><span class="co">#&gt; Attaching package: &#39;recipes&#39;</span></span>
+<span id="cb17-5"><a href="#cb17-5" tabindex="-1"></a><span class="co">#&gt; The following object is masked from &#39;package:stats&#39;:</span></span>
+<span id="cb17-6"><a href="#cb17-6" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb17-7"><a href="#cb17-7" tabindex="-1"></a><span class="co">#&gt;     step</span></span>
+<span id="cb17-8"><a href="#cb17-8" tabindex="-1"></a></span>
+<span id="cb17-9"><a href="#cb17-9" tabindex="-1"></a>expo_rec <span class="ot">&lt;-</span> <span class="fu">recipe</span>(status <span class="sc">~</span> ., toy_census) <span class="sc">|&gt;</span></span>
+<span id="cb17-10"><a href="#cb17-10" tabindex="-1"></a>  <span class="fu">step_expose</span>(<span class="at">end_date =</span> <span class="st">&quot;2022-12-31&quot;</span>, <span class="at">target_status =</span> <span class="st">&quot;Surrender&quot;</span>,</span>
+<span id="cb17-11"><a href="#cb17-11" tabindex="-1"></a>              <span class="at">options =</span> <span class="fu">list</span>(<span class="at">expo_length =</span> <span class="st">&quot;month&quot;</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb17-12"><a href="#cb17-12" tabindex="-1"></a>  <span class="fu">prep</span>()</span>
+<span id="cb17-13"><a href="#cb17-13" tabindex="-1"></a></span>
+<span id="cb17-14"><a href="#cb17-14" tabindex="-1"></a>expo_rec</span>
+<span id="cb17-15"><a href="#cb17-15" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb17-16"><a href="#cb17-16" tabindex="-1"></a><span class="co">#&gt; ── Recipe ──────────────────────────────────────────────────────────────────────</span></span>
+<span id="cb17-17"><a href="#cb17-17" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb17-18"><a href="#cb17-18" tabindex="-1"></a><span class="co">#&gt; ── Inputs</span></span>
+<span id="cb17-19"><a href="#cb17-19" tabindex="-1"></a><span class="co">#&gt; Number of variables by role</span></span>
+<span id="cb17-20"><a href="#cb17-20" tabindex="-1"></a><span class="co">#&gt; outcome:   1</span></span>
+<span id="cb17-21"><a href="#cb17-21" tabindex="-1"></a><span class="co">#&gt; predictor: 3</span></span>
+<span id="cb17-22"><a href="#cb17-22" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb17-23"><a href="#cb17-23" tabindex="-1"></a><span class="co">#&gt; ── Training information</span></span>
+<span id="cb17-24"><a href="#cb17-24" tabindex="-1"></a><span class="co">#&gt; Training data contained 3 data points and 1 incomplete row.</span></span>
+<span id="cb17-25"><a href="#cb17-25" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb17-26"><a href="#cb17-26" tabindex="-1"></a><span class="co">#&gt; ── Operations</span></span>
+<span id="cb17-27"><a href="#cb17-27" tabindex="-1"></a><span class="co">#&gt; • Exposed data based on policy months for target status Surrender: &lt;none&gt; |</span></span>
+<span id="cb17-28"><a href="#cb17-28" tabindex="-1"></a><span class="co">#&gt;   Trained</span></span>
+<span id="cb17-29"><a href="#cb17-29" tabindex="-1"></a></span>
+<span id="cb17-30"><a href="#cb17-30" tabindex="-1"></a><span class="fu">tidy</span>(expo_rec, <span class="at">number =</span> <span class="dv">1</span>)</span>
+<span id="cb17-31"><a href="#cb17-31" tabindex="-1"></a><span class="co">#&gt; # A tibble: 1 × 4</span></span>
+<span id="cb17-32"><a href="#cb17-32" tabindex="-1"></a><span class="co">#&gt;   exposure_type target_status start_date end_date  </span></span>
+<span id="cb17-33"><a href="#cb17-33" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;         &lt;chr&gt;         &lt;date&gt;     &lt;chr&gt;     </span></span>
+<span id="cb17-34"><a href="#cb17-34" tabindex="-1"></a><span class="co">#&gt; 1 policy_month  Surrender     1900-01-01 2022-12-31</span></span>
+<span id="cb17-35"><a href="#cb17-35" tabindex="-1"></a></span>
+<span id="cb17-36"><a href="#cb17-36" tabindex="-1"></a><span class="fu">bake</span>(expo_rec, <span class="at">new_data =</span> <span class="cn">NULL</span>)</span>
+<span id="cb17-37"><a href="#cb17-37" tabindex="-1"></a><span class="co">#&gt; # A tibble: 416 × 7</span></span>
+<span id="cb17-38"><a href="#cb17-38" tabindex="-1"></a><span class="co">#&gt;    issue_date term_date status pol_mth pol_date_mth pol_date_mth_end exposure</span></span>
+<span id="cb17-39"><a href="#cb17-39" tabindex="-1"></a><span class="co">#&gt;    &lt;date&gt;     &lt;date&gt;    &lt;fct&gt;    &lt;int&gt; &lt;date&gt;       &lt;date&gt;              &lt;dbl&gt;</span></span>
+<span id="cb17-40"><a href="#cb17-40" tabindex="-1"></a><span class="co">#&gt;  1 2010-01-01 NA        Active       1 2010-01-01   2010-01-31              1</span></span>
+<span id="cb17-41"><a href="#cb17-41" tabindex="-1"></a><span class="co">#&gt;  2 2010-01-01 NA        Active       2 2010-02-01   2010-02-28              1</span></span>
+<span id="cb17-42"><a href="#cb17-42" tabindex="-1"></a><span class="co">#&gt;  3 2010-01-01 NA        Active       3 2010-03-01   2010-03-31              1</span></span>
+<span id="cb17-43"><a href="#cb17-43" tabindex="-1"></a><span class="co">#&gt;  4 2010-01-01 NA        Active       4 2010-04-01   2010-04-30              1</span></span>
+<span id="cb17-44"><a href="#cb17-44" tabindex="-1"></a><span class="co">#&gt;  5 2010-01-01 NA        Active       5 2010-05-01   2010-05-31              1</span></span>
+<span id="cb17-45"><a href="#cb17-45" tabindex="-1"></a><span class="co">#&gt;  6 2010-01-01 NA        Active       6 2010-06-01   2010-06-30              1</span></span>
+<span id="cb17-46"><a href="#cb17-46" tabindex="-1"></a><span class="co">#&gt;  7 2010-01-01 NA        Active       7 2010-07-01   2010-07-31              1</span></span>
+<span id="cb17-47"><a href="#cb17-47" tabindex="-1"></a><span class="co">#&gt;  8 2010-01-01 NA        Active       8 2010-08-01   2010-08-31              1</span></span>
+<span id="cb17-48"><a href="#cb17-48" tabindex="-1"></a><span class="co">#&gt;  9 2010-01-01 NA        Active       9 2010-09-01   2010-09-30              1</span></span>
+<span id="cb17-49"><a href="#cb17-49" tabindex="-1"></a><span class="co">#&gt; 10 2010-01-01 NA        Active      10 2010-10-01   2010-10-31              1</span></span>
+<span id="cb17-50"><a href="#cb17-50" tabindex="-1"></a><span class="co">#&gt; # ℹ 406 more rows</span></span></code></pre></div>
 </div>
 <div id="miscellaneous" class="section level2">
 <h2>Miscellaneous</h2>
@@ -861,9 +860,9 @@ data frame uses the following naming conventions:</p>
 arguments.</p>
 <p>For example, if the policy number column was called <code>id</code>
 in our census-level data, we could write:</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">expose</span>(toy_census, <span class="at">end_date =</span> <span class="st">&quot;2022-12-31&quot;</span>, </span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">target =</span> <span class="st">&quot;Surrender&quot;</span>,</span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>       <span class="at">col_pol_num =</span> <span class="st">&quot;id&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a><span class="fu">expose</span>(toy_census, <span class="at">end_date =</span> <span class="st">&quot;2022-12-31&quot;</span>, </span>
+<span id="cb18-2"><a href="#cb18-2" tabindex="-1"></a>       <span class="at">target_status =</span> <span class="st">&quot;Surrender&quot;</span>,</span>
+<span id="cb18-3"><a href="#cb18-3" tabindex="-1"></a>       <span class="at">col_pol_num =</span> <span class="st">&quot;id&quot;</span>)</span></code></pre></div>
 </div>
 <div id="treatment-of-additional-columns-in-the-census-data" class="section level3">
 <h3>Treatment of additional columns in the census data</h3>
@@ -873,42 +872,42 @@ periods. Depending on the nature of the data, this may or may not be
 desirable. Constant policy attributes like plan type make sense to
 broadcast, but numeric values may or may not depending on the
 circumstances.</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>toy_census2 <span class="ot">&lt;-</span> toy_census <span class="sc">|&gt;</span> </span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">plan_type =</span> <span class="fu">c</span>(<span class="st">&quot;X&quot;</span>, <span class="st">&quot;Y&quot;</span>, <span class="st">&quot;Z&quot;</span>), </span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">policy_value =</span> <span class="fu">c</span>(<span class="dv">100</span>, <span class="dv">125</span>, <span class="dv">90</span>))</span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="fu">expose</span>(toy_census2, <span class="at">end_date =</span> <span class="st">&quot;2022-12-31&quot;</span>, </span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">target =</span> <span class="st">&quot;Surrender&quot;</span>)</span>
-<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Exposure data</span></span>
-<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Exposure type: policy_year </span></span>
-<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Target status: Surrender </span></span>
-<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Study range: 1900-01-01 to 2022-12-31</span></span>
-<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 36 × 10</span></span>
-<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    pol_num status issue_date term_date plan_type policy_value pol_yr</span></span>
-<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;      &lt;int&gt; &lt;fct&gt;  &lt;date&gt;     &lt;date&gt;    &lt;chr&gt;            &lt;dbl&gt;  &lt;int&gt;</span></span>
-<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1       1 Active 2010-01-01 NA        X                  100      1</span></span>
-<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  2       1 Active 2010-01-01 NA        X                  100      2</span></span>
-<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  3       1 Active 2010-01-01 NA        X                  100      3</span></span>
-<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  4       1 Active 2010-01-01 NA        X                  100      4</span></span>
-<span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  5       1 Active 2010-01-01 NA        X                  100      5</span></span>
-<span id="cb19-21"><a href="#cb19-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  6       1 Active 2010-01-01 NA        X                  100      6</span></span>
-<span id="cb19-22"><a href="#cb19-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  7       1 Active 2010-01-01 NA        X                  100      7</span></span>
-<span id="cb19-23"><a href="#cb19-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  8       1 Active 2010-01-01 NA        X                  100      8</span></span>
-<span id="cb19-24"><a href="#cb19-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  9       1 Active 2010-01-01 NA        X                  100      9</span></span>
-<span id="cb19-25"><a href="#cb19-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10       1 Active 2010-01-01 NA        X                  100     10</span></span>
-<span id="cb19-26"><a href="#cb19-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # ℹ 26 more rows</span></span>
-<span id="cb19-27"><a href="#cb19-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # ℹ 3 more variables: pol_date_yr &lt;date&gt;, pol_date_yr_end &lt;date&gt;,</span></span>
-<span id="cb19-28"><a href="#cb19-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   exposure &lt;dbl&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a>toy_census2 <span class="ot">&lt;-</span> toy_census <span class="sc">|&gt;</span> </span>
+<span id="cb19-2"><a href="#cb19-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">plan_type =</span> <span class="fu">c</span>(<span class="st">&quot;X&quot;</span>, <span class="st">&quot;Y&quot;</span>, <span class="st">&quot;Z&quot;</span>), </span>
+<span id="cb19-3"><a href="#cb19-3" tabindex="-1"></a>         <span class="at">policy_value =</span> <span class="fu">c</span>(<span class="dv">100</span>, <span class="dv">125</span>, <span class="dv">90</span>))</span>
+<span id="cb19-4"><a href="#cb19-4" tabindex="-1"></a></span>
+<span id="cb19-5"><a href="#cb19-5" tabindex="-1"></a><span class="fu">expose</span>(toy_census2, <span class="at">end_date =</span> <span class="st">&quot;2022-12-31&quot;</span>, </span>
+<span id="cb19-6"><a href="#cb19-6" tabindex="-1"></a>       <span class="at">target_status =</span> <span class="st">&quot;Surrender&quot;</span>)</span>
+<span id="cb19-7"><a href="#cb19-7" tabindex="-1"></a><span class="co">#&gt; Exposure data</span></span>
+<span id="cb19-8"><a href="#cb19-8" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb19-9"><a href="#cb19-9" tabindex="-1"></a><span class="co">#&gt;  Exposure type: policy_year </span></span>
+<span id="cb19-10"><a href="#cb19-10" tabindex="-1"></a><span class="co">#&gt;  Target status: Surrender </span></span>
+<span id="cb19-11"><a href="#cb19-11" tabindex="-1"></a><span class="co">#&gt;  Study range: 1900-01-01 to 2022-12-31</span></span>
+<span id="cb19-12"><a href="#cb19-12" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb19-13"><a href="#cb19-13" tabindex="-1"></a><span class="co">#&gt; # A tibble: 36 × 10</span></span>
+<span id="cb19-14"><a href="#cb19-14" tabindex="-1"></a><span class="co">#&gt;    pol_num status issue_date term_date plan_type policy_value pol_yr</span></span>
+<span id="cb19-15"><a href="#cb19-15" tabindex="-1"></a><span class="co">#&gt;      &lt;int&gt; &lt;fct&gt;  &lt;date&gt;     &lt;date&gt;    &lt;chr&gt;            &lt;dbl&gt;  &lt;int&gt;</span></span>
+<span id="cb19-16"><a href="#cb19-16" tabindex="-1"></a><span class="co">#&gt;  1       1 Active 2010-01-01 NA        X                  100      1</span></span>
+<span id="cb19-17"><a href="#cb19-17" tabindex="-1"></a><span class="co">#&gt;  2       1 Active 2010-01-01 NA        X                  100      2</span></span>
+<span id="cb19-18"><a href="#cb19-18" tabindex="-1"></a><span class="co">#&gt;  3       1 Active 2010-01-01 NA        X                  100      3</span></span>
+<span id="cb19-19"><a href="#cb19-19" tabindex="-1"></a><span class="co">#&gt;  4       1 Active 2010-01-01 NA        X                  100      4</span></span>
+<span id="cb19-20"><a href="#cb19-20" tabindex="-1"></a><span class="co">#&gt;  5       1 Active 2010-01-01 NA        X                  100      5</span></span>
+<span id="cb19-21"><a href="#cb19-21" tabindex="-1"></a><span class="co">#&gt;  6       1 Active 2010-01-01 NA        X                  100      6</span></span>
+<span id="cb19-22"><a href="#cb19-22" tabindex="-1"></a><span class="co">#&gt;  7       1 Active 2010-01-01 NA        X                  100      7</span></span>
+<span id="cb19-23"><a href="#cb19-23" tabindex="-1"></a><span class="co">#&gt;  8       1 Active 2010-01-01 NA        X                  100      8</span></span>
+<span id="cb19-24"><a href="#cb19-24" tabindex="-1"></a><span class="co">#&gt;  9       1 Active 2010-01-01 NA        X                  100      9</span></span>
+<span id="cb19-25"><a href="#cb19-25" tabindex="-1"></a><span class="co">#&gt; 10       1 Active 2010-01-01 NA        X                  100     10</span></span>
+<span id="cb19-26"><a href="#cb19-26" tabindex="-1"></a><span class="co">#&gt; # ℹ 26 more rows</span></span>
+<span id="cb19-27"><a href="#cb19-27" tabindex="-1"></a><span class="co">#&gt; # ℹ 3 more variables: pol_date_yr &lt;date&gt;, pol_date_yr_end &lt;date&gt;,</span></span>
+<span id="cb19-28"><a href="#cb19-28" tabindex="-1"></a><span class="co">#&gt; #   exposure &lt;dbl&gt;</span></span></code></pre></div>
 <p>If your experience study requires a numeric feature that varies over
 time (ex: policy values, crediting rates, etc.), you can always attach
 it to an <code>exposed_df</code> object using a join function.</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Illustrative example - assume `values` is a data frame containing the columns pol_num and pol_yr.</span></span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>exposed_data <span class="sc">|&gt;</span> </span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(values, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;pol_num&quot;</span>, <span class="st">&quot;pol_yr&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a></span>
+<span id="cb20-2"><a href="#cb20-2" tabindex="-1"></a><span class="co"># Illustrative example - assume `values` is a data frame containing the columns pol_num and pol_yr.</span></span>
+<span id="cb20-3"><a href="#cb20-3" tabindex="-1"></a></span>
+<span id="cb20-4"><a href="#cb20-4" tabindex="-1"></a>exposed_data <span class="sc">|&gt;</span> </span>
+<span id="cb20-5"><a href="#cb20-5" tabindex="-1"></a>  <span class="fu">left_join</span>(values, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;pol_num&quot;</span>, <span class="st">&quot;pol_yr&quot;</span>))</span></code></pre></div>
 </div>
 <div id="stacking-exposed_df-objects" class="section level3">
 <h3>Stacking <code>exposed_df</code> objects</h3>
@@ -929,58 +928,58 @@ status of “Surrender” whereas <code>exposed_data</code> has none.</p>
 <p>When <code>vctrs::vec_rbind()</code> is used to combine
 <code>exposed_data</code> and <code>exposed_data2</code>, the result
 combines attributes across both objects.</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>exposed_data2 <span class="ot">&lt;-</span> <span class="fu">expose</span>(toy_census, </span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>                        <span class="at">end_date =</span> <span class="st">&quot;2023-12-31&quot;</span>, </span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>                        <span class="at">start_date =</span> <span class="st">&quot;1890-01-01&quot;</span>,</span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>                        <span class="at">target_status =</span> <span class="st">&quot;Surrender&quot;</span>)</span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>vctrs<span class="sc">::</span><span class="fu">vec_rbind</span>(exposed_data, exposed_data2)</span>
-<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Exposure data</span></span>
-<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Exposure type: policy_year </span></span>
-<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Target status: Surrender </span></span>
-<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Study range: 1890-01-01 to 2023-12-31</span></span>
-<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 73 × 8</span></span>
-<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    pol_num status issue_date term_date pol_yr pol_date_yr pol_date_yr_end</span></span>
-<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;      &lt;int&gt; &lt;fct&gt;  &lt;date&gt;     &lt;date&gt;     &lt;int&gt; &lt;date&gt;      &lt;date&gt;         </span></span>
-<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1       1 Active 2010-01-01 NA             1 2010-01-01  2010-12-31     </span></span>
-<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  2       1 Active 2010-01-01 NA             2 2011-01-01  2011-12-31     </span></span>
-<span id="cb21-18"><a href="#cb21-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  3       1 Active 2010-01-01 NA             3 2012-01-01  2012-12-31     </span></span>
-<span id="cb21-19"><a href="#cb21-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  4       1 Active 2010-01-01 NA             4 2013-01-01  2013-12-31     </span></span>
-<span id="cb21-20"><a href="#cb21-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  5       1 Active 2010-01-01 NA             5 2014-01-01  2014-12-31     </span></span>
-<span id="cb21-21"><a href="#cb21-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  6       1 Active 2010-01-01 NA             6 2015-01-01  2015-12-31     </span></span>
-<span id="cb21-22"><a href="#cb21-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  7       1 Active 2010-01-01 NA             7 2016-01-01  2016-12-31     </span></span>
-<span id="cb21-23"><a href="#cb21-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  8       1 Active 2010-01-01 NA             8 2017-01-01  2017-12-31     </span></span>
-<span id="cb21-24"><a href="#cb21-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  9       1 Active 2010-01-01 NA             9 2018-01-01  2018-12-31     </span></span>
-<span id="cb21-25"><a href="#cb21-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10       1 Active 2010-01-01 NA            10 2019-01-01  2019-12-31     </span></span>
-<span id="cb21-26"><a href="#cb21-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # ℹ 63 more rows</span></span>
-<span id="cb21-27"><a href="#cb21-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # ℹ 1 more variable: exposure &lt;dbl&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" tabindex="-1"></a>exposed_data2 <span class="ot">&lt;-</span> <span class="fu">expose</span>(toy_census, </span>
+<span id="cb21-2"><a href="#cb21-2" tabindex="-1"></a>                        <span class="at">end_date =</span> <span class="st">&quot;2023-12-31&quot;</span>, </span>
+<span id="cb21-3"><a href="#cb21-3" tabindex="-1"></a>                        <span class="at">start_date =</span> <span class="st">&quot;1890-01-01&quot;</span>,</span>
+<span id="cb21-4"><a href="#cb21-4" tabindex="-1"></a>                        <span class="at">target_status =</span> <span class="st">&quot;Surrender&quot;</span>)</span>
+<span id="cb21-5"><a href="#cb21-5" tabindex="-1"></a></span>
+<span id="cb21-6"><a href="#cb21-6" tabindex="-1"></a>vctrs<span class="sc">::</span><span class="fu">vec_rbind</span>(exposed_data, exposed_data2)</span>
+<span id="cb21-7"><a href="#cb21-7" tabindex="-1"></a><span class="co">#&gt; Exposure data</span></span>
+<span id="cb21-8"><a href="#cb21-8" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb21-9"><a href="#cb21-9" tabindex="-1"></a><span class="co">#&gt;  Exposure type: policy_year </span></span>
+<span id="cb21-10"><a href="#cb21-10" tabindex="-1"></a><span class="co">#&gt;  Target status: Surrender </span></span>
+<span id="cb21-11"><a href="#cb21-11" tabindex="-1"></a><span class="co">#&gt;  Study range: 1890-01-01 to 2023-12-31</span></span>
+<span id="cb21-12"><a href="#cb21-12" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb21-13"><a href="#cb21-13" tabindex="-1"></a><span class="co">#&gt; # A tibble: 73 × 8</span></span>
+<span id="cb21-14"><a href="#cb21-14" tabindex="-1"></a><span class="co">#&gt;    pol_num status issue_date term_date pol_yr pol_date_yr pol_date_yr_end</span></span>
+<span id="cb21-15"><a href="#cb21-15" tabindex="-1"></a><span class="co">#&gt;      &lt;int&gt; &lt;fct&gt;  &lt;date&gt;     &lt;date&gt;     &lt;int&gt; &lt;date&gt;      &lt;date&gt;         </span></span>
+<span id="cb21-16"><a href="#cb21-16" tabindex="-1"></a><span class="co">#&gt;  1       1 Active 2010-01-01 NA             1 2010-01-01  2010-12-31     </span></span>
+<span id="cb21-17"><a href="#cb21-17" tabindex="-1"></a><span class="co">#&gt;  2       1 Active 2010-01-01 NA             2 2011-01-01  2011-12-31     </span></span>
+<span id="cb21-18"><a href="#cb21-18" tabindex="-1"></a><span class="co">#&gt;  3       1 Active 2010-01-01 NA             3 2012-01-01  2012-12-31     </span></span>
+<span id="cb21-19"><a href="#cb21-19" tabindex="-1"></a><span class="co">#&gt;  4       1 Active 2010-01-01 NA             4 2013-01-01  2013-12-31     </span></span>
+<span id="cb21-20"><a href="#cb21-20" tabindex="-1"></a><span class="co">#&gt;  5       1 Active 2010-01-01 NA             5 2014-01-01  2014-12-31     </span></span>
+<span id="cb21-21"><a href="#cb21-21" tabindex="-1"></a><span class="co">#&gt;  6       1 Active 2010-01-01 NA             6 2015-01-01  2015-12-31     </span></span>
+<span id="cb21-22"><a href="#cb21-22" tabindex="-1"></a><span class="co">#&gt;  7       1 Active 2010-01-01 NA             7 2016-01-01  2016-12-31     </span></span>
+<span id="cb21-23"><a href="#cb21-23" tabindex="-1"></a><span class="co">#&gt;  8       1 Active 2010-01-01 NA             8 2017-01-01  2017-12-31     </span></span>
+<span id="cb21-24"><a href="#cb21-24" tabindex="-1"></a><span class="co">#&gt;  9       1 Active 2010-01-01 NA             9 2018-01-01  2018-12-31     </span></span>
+<span id="cb21-25"><a href="#cb21-25" tabindex="-1"></a><span class="co">#&gt; 10       1 Active 2010-01-01 NA            10 2019-01-01  2019-12-31     </span></span>
+<span id="cb21-26"><a href="#cb21-26" tabindex="-1"></a><span class="co">#&gt; # ℹ 63 more rows</span></span>
+<span id="cb21-27"><a href="#cb21-27" tabindex="-1"></a><span class="co">#&gt; # ℹ 1 more variable: exposure &lt;dbl&gt;</span></span></code></pre></div>
 <p>If <code>dplyr::bind_rows()</code> were used instead, the attributes
 of <code>exposed_data</code> only are shown, which is likely
 incorrect.</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>dplyr<span class="sc">::</span><span class="fu">bind_rows</span>(exposed_data, exposed_data2)</span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Exposure data</span></span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Exposure type: policy_year </span></span>
-<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Target status:  </span></span>
-<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Study range: 1900-01-01 to 2022-12-31</span></span>
-<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 73 × 8</span></span>
-<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    pol_num status issue_date term_date pol_yr pol_date_yr pol_date_yr_end</span></span>
-<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;      &lt;int&gt; &lt;fct&gt;  &lt;date&gt;     &lt;date&gt;     &lt;int&gt; &lt;date&gt;      &lt;date&gt;         </span></span>
-<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1       1 Active 2010-01-01 NA             1 2010-01-01  2010-12-31     </span></span>
-<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  2       1 Active 2010-01-01 NA             2 2011-01-01  2011-12-31     </span></span>
-<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  3       1 Active 2010-01-01 NA             3 2012-01-01  2012-12-31     </span></span>
-<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  4       1 Active 2010-01-01 NA             4 2013-01-01  2013-12-31     </span></span>
-<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  5       1 Active 2010-01-01 NA             5 2014-01-01  2014-12-31     </span></span>
-<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  6       1 Active 2010-01-01 NA             6 2015-01-01  2015-12-31     </span></span>
-<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  7       1 Active 2010-01-01 NA             7 2016-01-01  2016-12-31     </span></span>
-<span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  8       1 Active 2010-01-01 NA             8 2017-01-01  2017-12-31     </span></span>
-<span id="cb22-19"><a href="#cb22-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  9       1 Active 2010-01-01 NA             9 2018-01-01  2018-12-31     </span></span>
-<span id="cb22-20"><a href="#cb22-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10       1 Active 2010-01-01 NA            10 2019-01-01  2019-12-31     </span></span>
-<span id="cb22-21"><a href="#cb22-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # ℹ 63 more rows</span></span>
-<span id="cb22-22"><a href="#cb22-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # ℹ 1 more variable: exposure &lt;dbl&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" tabindex="-1"></a>dplyr<span class="sc">::</span><span class="fu">bind_rows</span>(exposed_data, exposed_data2)</span>
+<span id="cb22-2"><a href="#cb22-2" tabindex="-1"></a><span class="co">#&gt; Exposure data</span></span>
+<span id="cb22-3"><a href="#cb22-3" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb22-4"><a href="#cb22-4" tabindex="-1"></a><span class="co">#&gt;  Exposure type: policy_year </span></span>
+<span id="cb22-5"><a href="#cb22-5" tabindex="-1"></a><span class="co">#&gt;  Target status:  </span></span>
+<span id="cb22-6"><a href="#cb22-6" tabindex="-1"></a><span class="co">#&gt;  Study range: 1900-01-01 to 2022-12-31</span></span>
+<span id="cb22-7"><a href="#cb22-7" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb22-8"><a href="#cb22-8" tabindex="-1"></a><span class="co">#&gt; # A tibble: 73 × 8</span></span>
+<span id="cb22-9"><a href="#cb22-9" tabindex="-1"></a><span class="co">#&gt;    pol_num status issue_date term_date pol_yr pol_date_yr pol_date_yr_end</span></span>
+<span id="cb22-10"><a href="#cb22-10" tabindex="-1"></a><span class="co">#&gt;      &lt;int&gt; &lt;fct&gt;  &lt;date&gt;     &lt;date&gt;     &lt;int&gt; &lt;date&gt;      &lt;date&gt;         </span></span>
+<span id="cb22-11"><a href="#cb22-11" tabindex="-1"></a><span class="co">#&gt;  1       1 Active 2010-01-01 NA             1 2010-01-01  2010-12-31     </span></span>
+<span id="cb22-12"><a href="#cb22-12" tabindex="-1"></a><span class="co">#&gt;  2       1 Active 2010-01-01 NA             2 2011-01-01  2011-12-31     </span></span>
+<span id="cb22-13"><a href="#cb22-13" tabindex="-1"></a><span class="co">#&gt;  3       1 Active 2010-01-01 NA             3 2012-01-01  2012-12-31     </span></span>
+<span id="cb22-14"><a href="#cb22-14" tabindex="-1"></a><span class="co">#&gt;  4       1 Active 2010-01-01 NA             4 2013-01-01  2013-12-31     </span></span>
+<span id="cb22-15"><a href="#cb22-15" tabindex="-1"></a><span class="co">#&gt;  5       1 Active 2010-01-01 NA             5 2014-01-01  2014-12-31     </span></span>
+<span id="cb22-16"><a href="#cb22-16" tabindex="-1"></a><span class="co">#&gt;  6       1 Active 2010-01-01 NA             6 2015-01-01  2015-12-31     </span></span>
+<span id="cb22-17"><a href="#cb22-17" tabindex="-1"></a><span class="co">#&gt;  7       1 Active 2010-01-01 NA             7 2016-01-01  2016-12-31     </span></span>
+<span id="cb22-18"><a href="#cb22-18" tabindex="-1"></a><span class="co">#&gt;  8       1 Active 2010-01-01 NA             8 2017-01-01  2017-12-31     </span></span>
+<span id="cb22-19"><a href="#cb22-19" tabindex="-1"></a><span class="co">#&gt;  9       1 Active 2010-01-01 NA             9 2018-01-01  2018-12-31     </span></span>
+<span id="cb22-20"><a href="#cb22-20" tabindex="-1"></a><span class="co">#&gt; 10       1 Active 2010-01-01 NA            10 2019-01-01  2019-12-31     </span></span>
+<span id="cb22-21"><a href="#cb22-21" tabindex="-1"></a><span class="co">#&gt; # ℹ 63 more rows</span></span>
+<span id="cb22-22"><a href="#cb22-22" tabindex="-1"></a><span class="co">#&gt; # ℹ 1 more variable: exposure &lt;dbl&gt;</span></span></code></pre></div>
 <p>In order to stack <code>exposed_df</code> objects, the exposure
 period types and lengths must match. If they do not, an error will be
 thrown. For example, policy year exposure records cannot be combined
@@ -1031,12 +1030,8 @@ and convert the data to an <code>exposed_df</code> using
 </div>
 <div id="limitations" class="section level3">
 <h3>Limitations</h3>
-<p>The <code>expose()</code> family does not support:</p>
-<ul>
-<li>Studies with multiple changes from an active to an inactive status.
-For example, these functions do not support changes from an active
-status to an impaired status, and back to an active status.</li>
-</ul>
+<p>The <code>expose()</code> family does not support studies with
+multiple changes between an active status and an inactive status.</p>
 </div>
 </div>
 

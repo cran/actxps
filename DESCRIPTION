@@ -1,7 +1,7 @@
 Package: actxps
 Title: Create Actuarial Experience Studies: Prepare Data, Summarize
         Results, and Create Reports
-Version: 1.4.0
+Version: 1.5.0
 Authors@R: 
     person("Matt", "Heaphy", email = "mattrmattrs@gmail.com", role = c("aut", "cre"))
 Maintainer: Matt Heaphy <mattrmattrs@gmail.com>
@@ -20,18 +20,18 @@ URL: https://github.com/mattheaphy/actxps/,
         https://mattheaphy.github.io/actxps/
 BugReports: https://github.com/mattheaphy/actxps/issues
 Encoding: UTF-8
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.0
 Suggests: knitr, RColorBrewer, rmarkdown, testthat (>= 3.0.0), shiny
         (>= 1.7.5), bslib (>= 0.5.1), thematic
 Config/testthat/edition: 3
 Depends: R (>= 4.1)
-Imports: lubridate, dplyr (>= 1.1.1), ggplot2, tibble, rlang, glue,
-        purrr, scales, gt (>= 0.9.0), paletteer, recipes, generics,
-        readr, tidyr, vctrs
+Imports: dplyr (>= 1.1.1), ggplot2, tibble, rlang, glue, purrr, scales,
+        gt (>= 0.9.0), paletteer, recipes, generics, readr, tidyr,
+        vctrs, clock
 LazyData: true
 VignetteBuilder: knitr
 NeedsCompilation: no
-Packaged: 2023-11-26 15:45:04 UTC; Matt
+Packaged: 2024-06-25 12:18:07 UTC; Matt
 Author: Matt Heaphy [aut, cre]
 Repository: CRAN
-Date/Publication: 2023-11-26 16:10:02 UTC
+Date/Publication: 2024-06-25 12:40:02 UTC

@@ -53,14 +53,14 @@ exposed_data |>
 expected_table <- c(seq(0.005, 0.03, length.out = 10), 0.2, 0.15, rep(0.05, 3))
 
 # using 2 different expected termination assumption sets
-exposed_data2 <- exposed_data |>
+exposed_data <- exposed_data |>
   mutate(expected_1 = expected_table[pol_yr],
          expected_2 = ifelse(exposed_data$inc_guar, 0.015, 0.03))
 
-exp_res <- exposed_data2 |>
+exp_res <- exposed_data |>
   group_by(pol_yr, inc_guar) |>
   exp_stats(expected = c("expected_1", "expected_2"))
-  
+
 
 exp_res |> 
   select(pol_yr, inc_guar, q_obs, expected_1, expected_2, 
@@ -68,7 +68,7 @@ exp_res |>
 
 
 ## ----act-exp-wt---------------------------------------------------------------
-exposed_data2 |>
+exposed_data |>
   group_by(pol_yr, inc_guar) |>
   exp_stats(expected = c("expected_1", "expected_2"), 
             wt = "premium") |> 
@@ -77,38 +77,38 @@ exposed_data2 |>
 
 
 ## ----cred1--------------------------------------------------------------------
-exposed_data2 |> 
+exposed_data |> 
   group_by(pol_yr, inc_guar) |>
   exp_stats(credibility = TRUE) |> 
   select(pol_yr, inc_guar, claims, q_obs, credibility)
 
 ## ----cred2--------------------------------------------------------------------
-exposed_data2 |> 
+exposed_data |> 
   group_by(pol_yr, inc_guar) |>
   exp_stats(credibility = TRUE, conf_level = 0.98, cred_r = 0.03) |> 
   select(pol_yr, inc_guar, claims, q_obs, credibility)
 
 ## ----cred3--------------------------------------------------------------------
-exposed_data2 |> 
+exposed_data |> 
   group_by(pol_yr, inc_guar) |>
   exp_stats(credibility = TRUE, expected = "expected_1") |> 
   select(pol_yr, inc_guar, claims, q_obs, credibility, adj_expected_1, 
          expected_1, ae_expected_1)
 
 ## ----conf1--------------------------------------------------------------------
-exposed_data2 |> 
+exposed_data |> 
   group_by(pol_yr, inc_guar) |>
   exp_stats(conf_int = TRUE) |> 
   select(pol_yr, inc_guar, q_obs, q_obs_lower, q_obs_upper)
 
 ## ----conf2--------------------------------------------------------------------
-exposed_data2 |> 
+exposed_data |> 
   group_by(pol_yr, inc_guar) |>
   exp_stats(conf_int = TRUE, conf_level = 0.9) |> 
   select(pol_yr, inc_guar, q_obs, q_obs_lower, q_obs_upper)
 
 ## ----conf3--------------------------------------------------------------------
-exposed_data2 |> 
+exposed_data |> 
   group_by(pol_yr, inc_guar) |>
   exp_stats(conf_int = TRUE, expected = "expected_1") |> 
   select(pol_yr, inc_guar, starts_with("ae_"))

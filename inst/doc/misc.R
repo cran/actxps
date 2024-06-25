@@ -8,7 +8,7 @@ actxps:::set_actxps_plot_theme()
 
 ## ----packages-----------------------------------------------------------------
 library(actxps)
-library(lubridate)
+library(clock)
 
 ## ----agg-exp-1----------------------------------------------------------------
 agg_sim_exp_df <- agg_sim_dat |> 
@@ -23,7 +23,7 @@ summary(agg_sim_exp_df, pol_yr)
 summary(agg_sim_exp_df, inc_guar, product)
 
 ## ----pol-dur1-----------------------------------------------------------------
-dates <- ymd("2022-12-31") + years(0:10)
+dates <- date_build(2022 + 0:10, 12, 31)
 
 # policy years
 pol_yr(dates, "2022-05-10")
@@ -36,15 +36,6 @@ pol_mth(dates, "2022-05-10")
 
 # policy weeks
 pol_wk(dates, "2022-05-10")
-
-
-
-## ----pol-dur2-----------------------------------------------------------------
-# days
-pol_interval(dates, "2022-05-10", days(1))
-
-# fortnights
-pol_interval(dates, "2022-05-10", weeks(2))
 
 
 ## ----add-preds, fig.height=4, fig.width=5-------------------------------------

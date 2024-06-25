@@ -33,8 +33,6 @@ sum(exposed_data$status == "Surrender") / sum(exposed_data$exposure)
 exp_stats(exposed_data)
 
 ## ----stats-grouped------------------------------------------------------------
-library(dplyr)
-
 exp_res <- exposed_data |>
   group_by(pol_yr, inc_guar) |>
   exp_stats()

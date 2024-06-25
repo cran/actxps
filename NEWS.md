@@ -1,3 +1,27 @@
+# actxps 1.5.0
+
+- `expose_split()` bug fixes: 
+
+  - `expose_split()` was updated to respect the values of `start_date` 
+    and `end_date` originally passed to the `expose()` function.
+  - Future policy anniversary dates falling on February 29th leap days are now
+    consistent with `expose()`
+  - New tests were added to verify that the sum of policy year exposures
+    (`exposure_pol`) after calling `expose_split()` match exposures produced by
+    `expose_py()`.
+  
+- The `expose()` family of functions and `add_transactions()` now allow date 
+  columns to be passed as character vectors in YYYY-MM-DD format. Any character 
+  vectors are converted to dates behind-the-scenes, and any missing values will
+  results in an error message. 
+- To improve the speed of date calculations, lubridate was replaced with the 
+  clock package. Lubridate is no longer included in Imports.
+- **Breaking change** - The `pol_interval()` function is no longer exported. 
+  As part of the removal of lubridate, this function's `dur_length` argument 
+  only accepts, "year", "quarter", "month", or "week".
+- Shiny app layout updates
+- Small vignette and documentation clean-ups
+
 # actxps 1.4.0
 
 - actxps now supports split exposures that divide calendar periods crossing 
